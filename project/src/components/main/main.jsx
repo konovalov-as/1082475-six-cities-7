@@ -2,16 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 
-const getPlaceCard = function(offersCount) {
-  const places = [];
-  for (let index = 0; index < offersCount; index++) {
-    places.push(PlaceCard());
-  }
-
-  return places;
-};
-
-function Main({offersCount}) {
+function Main({offersPlace}) {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -101,7 +92,9 @@ function Main({offersCount}) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {getPlaceCard(offersCount)}
+                {offersPlace.slice().map((offerPlace) => (
+                  <PlaceCard key={offerPlace.id} offerPlace={offerPlace}/>
+                ))}
               </div>
             </section>
             <div className="cities__right-section">
@@ -115,7 +108,7 @@ function Main({offersCount}) {
 }
 
 Main.propTypes = {
-  offersCount: PropTypes.number.isRequired,
+  offersPlace: PropTypes.array.isRequired,
 };
 
 export default Main;
