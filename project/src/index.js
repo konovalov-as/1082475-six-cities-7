@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 
-const offersPlace = [
+const placeOffers = [
   {
     id: '0',
     title: 'Perfectly located Castro',
@@ -58,7 +58,7 @@ const offersPlace = [
 ReactDOM.render(
   <React.StrictMode>
     <App
-      offersPlace = {offersPlace}
+      placeOffers = {placeOffers}
     />
   </React.StrictMode>,
   document.getElementById('root'));

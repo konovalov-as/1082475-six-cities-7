@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Main from '../main/main';
 
-function App({offersPlace}) {
-  return <Main offersPlace = {offersPlace} />;
+function App({placeOffers}) {
+  return <Main placeOffers = {placeOffers} />;
 }
 
 App.propTypes = {
-  offersPlace: PropTypes.array.isRequired,
+  placeOffers: PropTypes.array.isRequired,
 };
 
 export default App;

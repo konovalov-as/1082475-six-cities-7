@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function PlaceCard({offerPlace}) {
+function PlaceCard({placeOffer}) {
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
-        <span>{offerPlace.isPremium ? 'Premium' : ''} </span>
+        <span>{placeOffer.isPremium ? 'Premium' : ''} </span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={offerPlace.previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={placeOffer.previewImage} width="260" height="200" alt="Place image"/>
         </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offerPlace.price}</b>
+            <b className="place-card__price-value">&euro;{placeOffer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
@@ -32,16 +32,16 @@ function PlaceCard({offerPlace}) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offerPlace.type}</a>
+          <a href="#">{placeOffer.type}</a>
         </h2>
-        <p className="place-card__type">{offerPlace.type}</p>
+        <p className="place-card__type">{placeOffer.type}</p>
       </div>
     </article>
   );
 }
 
 PlaceCard.propTypes = {
-  offerPlace: PropTypes.object.isRequired,
+  placeOffer: PropTypes.object.isRequired,
 };
 
 export default PlaceCard;
