@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
 import Logo from '../logo/logo';
 
-function Main({offersPlace}) {
+function Main({placeOffers}) {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -91,8 +91,8 @@ function Main({offersPlace}) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offersPlace.slice().map((offerPlace) => (
-                  <PlaceCard key={offerPlace.id} offerPlace={offerPlace}/>
+                {placeOffers.map((placeOffer) => (
+                  <PlaceCard key={placeOffer.id} placeOffer={placeOffer}/>
                 ))}
               </div>
             </section>
@@ -107,7 +107,7 @@ function Main({offersPlace}) {
 }
 
 Main.propTypes = {
-  offersPlace: PropTypes.array.isRequired,
+  placeOffers: PropTypes.array.isRequired,
 };
 
 export default Main;

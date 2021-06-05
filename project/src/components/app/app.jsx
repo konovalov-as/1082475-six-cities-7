@@ -9,13 +9,13 @@ import Favorites from '../favorites/favorites';
 import Room from '../room/room';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-function App({offersPlace}) {
+function App({placeOffers}) {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
           <Main
-            offersPlace = {offersPlace}
+            placeOffers = {placeOffers}
           />
         </Route>
         <Route exact path={AppRoute.ROOM}>
@@ -36,7 +36,7 @@ function App({offersPlace}) {
 }
 
 App.propTypes = {
-  offersPlace: PropTypes.array.isRequired,
+  placeOffers: PropTypes.array.isRequired,
 };
 
 export default App;
