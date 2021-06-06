@@ -9,7 +9,7 @@ function PlaceCard({placeOffer}) {
         <span>{placeOffer.isPremium ? 'Premium' : ''} </span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to="/offer">
+        <Link to={`/offer/${placeOffer.id}`}>
           <img className="place-card__image" src={placeOffer.previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
