@@ -1,13 +1,14 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {AppRoute} from '../../const';
 
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
-import Favorites from '../favorites/favorites';
+import FavoritesList from '../favorites-list/favorites-list';
 import Room from '../room/room';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+
+import placeOffersProp from '../offer-list/offer-list.prop';
 
 function App({placeOffers}) {
   return (
@@ -22,7 +23,9 @@ function App({placeOffers}) {
           <Room />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <Favorites />
+          <FavoritesList
+            placeOffers = {placeOffers}
+          />
         </Route>
         <Route exact path={AppRoute.SIGNIN}>
           <SignIn />
@@ -36,7 +39,7 @@ function App({placeOffers}) {
 }
 
 App.propTypes = {
-  placeOffers: PropTypes.array.isRequired,
+  placeOffers: placeOffersProp,
 };
 
 export default App;
