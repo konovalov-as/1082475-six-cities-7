@@ -1,15 +1,20 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {AppRoute} from '../../const';
 
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
-import Favorites from '../favorites/favorites';
+import FavoritesList from '../favorites-list/favorites-list';
+import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import Room from '../room/room';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-function App({placeOffers}) {
+import placeOffersProp from '../offer-list/offer-list.prop';
+import uniquePlaceProp from '../../mocks/place-offers.prop';
+
+function App({placeOffers, uniquePlaces}) {
+  const isFavorite = placeOffers.some((placeOffer) => (placeOffer.isFavorite === true));
+
   return (
     <BrowserRouter>
       <Switch>
@@ -22,7 +27,12 @@ function App({placeOffers}) {
           <Room />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <Favorites />
+          {(!isFavorite) ?
+            <FavoritesEmpty /> :
+            <FavoritesList
+              placeOffers = {placeOffers}
+              uniquePlaces = {uniquePlaces}
+            />}
         </Route>
         <Route exact path={AppRoute.SIGNIN}>
           <SignIn />
@@ -36,7 +46,8 @@ function App({placeOffers}) {
 }
 
 App.propTypes = {
-  placeOffers: PropTypes.array.isRequired,
+  placeOffers: placeOffersProp,
+  uniquePlaces: uniquePlaceProp,
 };
 
 export default App;
