@@ -5,12 +5,16 @@ import {AppRoute} from '../../const';
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import FavoritesList from '../favorites-list/favorites-list';
+import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import Room from '../room/room';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
+import uniquePlaceProp from '../../mocks/place-offers.prop';
 
-function App({placeOffers}) {
+function App({placeOffers, uniquePlaces}) {
+  const isFavorite = placeOffers.some((placeOffer) => (placeOffer.isFavorite === true));
+
   return (
     <BrowserRouter>
       <Switch>
@@ -23,9 +27,12 @@ function App({placeOffers}) {
           <Room />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesList
-            placeOffers = {placeOffers}
-          />
+          {(!isFavorite) ?
+            <FavoritesEmpty /> :
+            <FavoritesList
+              placeOffers = {placeOffers}
+              uniquePlaces = {uniquePlaces}
+            />}
         </Route>
         <Route exact path={AppRoute.SIGNIN}>
           <SignIn />
@@ -40,6 +47,7 @@ function App({placeOffers}) {
 
 App.propTypes = {
   placeOffers: placeOffersProp,
+  uniquePlaces: uniquePlaceProp,
 };
 
 export default App;

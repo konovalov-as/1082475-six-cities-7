@@ -1,21 +1,15 @@
 import React from 'react';
 
-import Logo from '../logo/logo';
-import FavoritesItem from '../favorites-item/favorites-item';
-
-import placeOffersProp from '../offer-list/offer-list.prop';
-import uniquePlaceProp from '../../mocks/place-offers.prop';
-
-function FavoritesList(props) {
-  const {placeOffers, uniquePlaces} = props;
-
+function FavoritesEmpty(props) {
   return (
-    <div className="page">
+    <div className="page page--favorites-empty">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Logo />
+              <a className="header__logo-link" href="main.html">
+                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
+              </a>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -37,20 +31,18 @@ function FavoritesList(props) {
         </div>
       </header>
 
-      <main className="page__main page__main--favorites">
+      <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {uniquePlaces.map((uniquePlace) => {
-                const favoritesOffers = placeOffers.filter((placeOffer) => (placeOffer.city.name === uniquePlace && placeOffer.isFavorite));
-                return favoritesOffers.length ? <FavoritesItem key={uniquePlace} uniquePlace={uniquePlace} favoritesOffers={favoritesOffers}/> : null;
-              })}
-            </ul>
+          <section className="favorites favorites--empty">
+            <h1 className="visually-hidden">Favorites (empty)</h1>
+            <div className="favorites__status-wrapper">
+              <b className="favorites__status">Nothing yet saved.</b>
+              <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
+            </div>
           </section>
         </div>
       </main>
-      <footer className="footer container">
+      <footer className="footer">
         <a className="footer__logo-link" href="main.html">
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
         </a>
@@ -59,9 +51,4 @@ function FavoritesList(props) {
   );
 }
 
-FavoritesList.propTypes = {
-  placeOffers: placeOffersProp,
-  uniquePlaces: uniquePlaceProp,
-};
-
-export default FavoritesList;
+export default FavoritesEmpty;
