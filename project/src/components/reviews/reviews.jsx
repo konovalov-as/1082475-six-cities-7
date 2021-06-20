@@ -7,7 +7,7 @@ const ReviewLength = {
   MAX: 300,
 };
 
-function Reviews(prop) {
+function Reviews(props) {
   const submitButton = useRef();
 
   const [review, setReview] = useState({
@@ -16,7 +16,7 @@ function Reviews(prop) {
     reviewLength: ReviewLength.current,
   });
 
-  const {reviewLength} = review;
+  const {reviewLength, rating} = review;
 
   function handleRatingChange(evt) {
     const {name, value} = evt.target;
@@ -37,10 +37,10 @@ function Reviews(prop) {
 
   useEffect(() => {
     submitButton.current.disabled = false;
-    if (reviewLength < ReviewLength.MIN || reviewLength > ReviewLength.MAX || review.rating === '') {
+    if (reviewLength < ReviewLength.MIN || reviewLength > ReviewLength.MAX || rating === '') {
       submitButton.current.disabled = true;
     }
-  });
+  }, [reviewLength, rating]);
 
   return (
     <form className="reviews__form form"
