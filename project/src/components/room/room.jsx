@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../logo/logo';
 
-import Reviews from '../reviews/reviews';
+import Reviews from '../reviews-form/reviews-form';
 
 function Room(props) {
   return (
