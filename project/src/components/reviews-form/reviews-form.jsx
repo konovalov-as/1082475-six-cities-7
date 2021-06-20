@@ -7,7 +7,7 @@ const ReviewLength = {
   MAX: 300,
 };
 
-function Reviews(props) {
+function ReviewsForm(props) {
   const submitButton = useRef();
 
   const [review, setReview] = useState({
@@ -139,4 +139,4 @@ function Reviews(props) {
   );
 }
 
-export default Reviews;
+export default ReviewsForm;

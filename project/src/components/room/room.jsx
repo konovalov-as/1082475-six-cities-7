@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../logo/logo';
 
-import Reviews from '../reviews-form/reviews-form';
+import ReviewsForm from '../reviews-form/reviews-form';
 
 function Room(props) {
   return (
@@ -177,7 +177,7 @@ function Room(props) {
                     </div>
                   </li>
                 </ul>
-                <Reviews />
+                <ReviewsForm />
               </section>
             </div>
           </div>
