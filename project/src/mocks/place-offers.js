@@ -102,7 +102,7 @@ const placeOffers = [
   {
     city: {
       name: 'Amsterdam',
-      location: { latitude: 52.37454, longitude: 4.897976, zoom: 13 },
+      location: { latitude: 52.38454, longitude: 4.807976, zoom: 13 },
     },
     previewImage: 'https://7.react.pages.academy/static/hotel/7.jpg',
     images: [
@@ -202,7 +202,7 @@ const placeOffers = [
   {
     city: {
       name: 'Brussels',
-      location: { latitude: 50.846557, longitude: 4.351697, zoom: 13 },
+      location: { latitude: 50.856557, longitude: 4.361697, zoom: 13 },
     },
     previewImage: 'https://7.react.pages.academy/static/hotel/6.jpg',
     images: [
@@ -265,5 +265,10 @@ function filterPlaces(place, index) {
 }
 
 export const uniquePlaces = mapPlaces.filter(filterPlaces);
+
+export const firstOffer = {
+  name: 'Amsterdam',
+  location: { latitude: 52.38333, longitude: 4.9, zoom: 7 },
+};
 
 export default placeOffers;

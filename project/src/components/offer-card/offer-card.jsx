@@ -1,23 +1,23 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 
 import placeOfferProp from '../offer-card/offer-card.prop';
+import {handleCardHoverProp} from '../offer-card/offer-card.prop';
 
 function OfferCard(props) {
-  const {placeOffer} = props;
-  const [placeCurrentOffer, setPlaceOfferCurrent] = useState();
+  const {placeOffer, handleCardHover} = props;
 
-  function onMouseOver(evt) {
+  function handleMouseOver(evt) {
     const currentOffer = Number(evt.target.id);
     if (placeOffer.id === currentOffer) {
-      setPlaceOfferCurrent(currentOffer);
+      handleCardHover(currentOffer);
     }
   }
 
   return (
     <article className="cities__place-card place-card"
       id={placeOffer.id}
-      onMouseOver={onMouseOver}
+      onMouseOver={handleMouseOver}
     >
       {placeOffer.isPremium ? <div className="place-card__mark"><span>Premium</span></div> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
@@ -31,7 +31,6 @@ function OfferCard(props) {
             <b className="place-card__price-value">&euro;{placeOffer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <span>{placeCurrentOffer}</span>
           <button className="place-card__bookmark-button button" type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -56,6 +55,7 @@ function OfferCard(props) {
 
 OfferCard.propTypes = {
   placeOffer: placeOfferProp,
+  handleCardHover: handleCardHoverProp,
 };
 
 export default OfferCard;
