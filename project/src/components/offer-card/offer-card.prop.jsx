@@ -34,3 +34,5 @@ export default PropTypes.exact({
   }).isRequired,
   id: PropTypes.number.isRequired,
 });
+
+export const handleCardHoverProp = PropTypes.func.isRequired;

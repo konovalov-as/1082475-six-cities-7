@@ -1,11 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import OfferList from '../offer-list/offer-list';
 import Logo from '../logo/logo';
+import Map from '../map/map';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
+import {firstOfferProp} from '../../mocks/place-offers.prop';
 
-function Main({placeOffers}) {
+function Main({placeOffers, firstOffer}) {
+  const [selectedOffer, setSelectedOffer] = useState({});
+
+  const handleCardHover = (cardId) => {
+    const currentOffer = placeOffers.find((placeOffer) =>
+      placeOffer.id === cardId,
+    );
+    setSelectedOffer(currentOffer);
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -92,10 +103,10 @@ function Main({placeOffers}) {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-              {<OfferList placeOffers={placeOffers}/>}
+              {<OfferList placeOffers={placeOffers} handleCardHover={handleCardHover} />}
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map firstOffer={firstOffer} placeOffers={placeOffers} selectedOffer={selectedOffer} />
             </div>
           </div>
         </div>
@@ -106,6 +117,7 @@ function Main({placeOffers}) {
 
 Main.propTypes = {
   placeOffers: placeOffersProp,
+  firstOffer: firstOfferProp,
 };
 
 export default Main;
