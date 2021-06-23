@@ -37,7 +37,7 @@ export const comments = [
         },
         rating: 3,
         comment: 'Bathed in the nature. Completely unplugged. Unforgettable.',
-        date: '2021-05-26T14:56:38.818Z',
+        date: '2021-06-20T14:56:38.818Z',
       },
     ],
   },
