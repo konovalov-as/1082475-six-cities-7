@@ -10,10 +10,11 @@ import Room from '../room/room';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
+import nearPlaceOffersProp from '../../mocks/place-offers-near.prop';
 import uniquePlaceProp, {firstOfferProp} from '../../mocks/place-offers.prop';
 import commentsProp from '../../mocks/comments.prop';
 
-function App({placeOffers, uniquePlaces, firstOffer, comments}) {
+function App({placeOffers, uniquePlaces, firstOffer, comments, nearPlaceOffers}) {
   const isFavorite = placeOffers.some((placeOffer) => (placeOffer.isFavorite === true));
 
   return (
@@ -26,7 +27,12 @@ function App({placeOffers, uniquePlaces, firstOffer, comments}) {
           />
         </Route>
         <Route exact path={AppRoute.ROOM}>
-          <Room comments = {comments}/>
+          <Room
+            comments = {comments}
+            firstOffer = {firstOffer}
+            placeOffers = {placeOffers}
+            nearPlaceOffers = {nearPlaceOffers}
+          />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
           {(!isFavorite) ?
@@ -52,6 +58,7 @@ App.propTypes = {
   uniquePlaces: uniquePlaceProp,
   firstOffer: firstOfferProp,
   comments: commentsProp,
+  nearPlaceOffers: nearPlaceOffersProp,
 };
 
 export default App;
