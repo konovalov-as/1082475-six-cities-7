@@ -15,11 +15,15 @@ function useMap(mapRef, firstOffer) {
       });
 
       leaflet
-        .tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'})
+        .tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'})
         .addTo(instance);
 
       setMap(instance);
     }
+
+    return () => {
+      mapRef = null;
+    };
   }, [mapRef, map, firstOffer]);
 
   return map;

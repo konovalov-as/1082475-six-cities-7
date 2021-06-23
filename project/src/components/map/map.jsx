@@ -51,7 +51,7 @@ function Map(props) {
   }, [map, placeOffers, selectedOffer]);
 
   return (
-    <section id="map" ref={mapRef} style={{height: '100%'}} className="cities__map map"></section>
+    <section id="map" ref={mapRef} style={{height: '100%'}} className="cities__map map" />
   );
 }
 
