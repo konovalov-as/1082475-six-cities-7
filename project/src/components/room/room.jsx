@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 import Logo from '../logo/logo';
 import Reviews from '../reviews/reviews';
@@ -6,12 +7,12 @@ import Map from '../map/map';
 import NearOfferList from '../offer-list-near/offer-list-near';
 
 import commentsProp from '../../mocks/comments.prop';
-import {firstOfferProp} from '../../mocks/place-offers.prop';
+import {defaultCityProp} from '../../mocks/place-offers.prop';
 import placeOffersProp from '../offer-list/offer-list.prop';
 import nearPlaceOffersProp from '../../mocks/place-offers-near.prop';
 
 function Room(props) {
-  const {comments, firstOffer, placeOffers, nearPlaceOffers} = props;
+  const {defaultCity, placeOffers, comments, nearPlaceOffers} = props;
 
   const url = window.location.pathname;
   const urlItems = url.split('/');
@@ -186,7 +187,7 @@ function Room(props) {
             </div>
           </div>
           <section className="property__map map">
-            <Map firstOffer={firstOffer} placeOffers={mapNearOffers} selectedOffer={placeOffers[idOffer - 1]} />
+            <Map defaultCity={defaultCity} placeOffers={mapNearOffers} selectedOffer={placeOffers[idOffer - 1]} />
           </section>
         </section>
         <div className="container">
@@ -202,9 +203,17 @@ function Room(props) {
 
 Room.propTypes = {
   comments: commentsProp,
-  firstOffer: firstOfferProp,
+  defaultCity: defaultCityProp,
   placeOffers: placeOffersProp,
   nearPlaceOffers: nearPlaceOffersProp,
 };
 
-export default Room;
+const mapStateToProps = (state) => ({
+  defaultCity: state.defaultCity,
+  placeOffers: state.placeOffers,
+  comments: state.comments,
+  nearPlaceOffers: state.nearPlaceOffers,
+});
+
+export {Room};
+export default connect(mapStateToProps, null)(Room);

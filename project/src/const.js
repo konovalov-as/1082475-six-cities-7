@@ -5,3 +5,5 @@ export const AppRoute = {
   MAIN: '/',
   NOT_FOUND_SCREEN: '/not-found-screen',
 };
+
+export const firstCity = 'Paris';

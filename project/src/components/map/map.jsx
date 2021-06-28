@@ -1,4 +1,5 @@
 import React, {useRef, useEffect} from 'react';
+import {connect} from 'react-redux';
 
 import PropTypes from 'prop-types';
 
@@ -8,7 +9,7 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
-import {firstOfferProp} from '../../mocks/place-offers.prop';
+import {defaultCityProp} from '../../mocks/place-offers.prop';
 
 const Marker = {
   DEFAULT: 'img/pin.svg',
@@ -28,9 +29,9 @@ const currentCustomIcon = leaflet.icon({
 });
 
 function Map(props) {
-  const {firstOffer, placeOffers, selectedOffer} = props;
+  const {defaultCity, placeOffers, selectedOffer} = props;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, firstOffer);
+  const map = useMap(mapRef, defaultCity);
 
   useEffect(() => {
     if (map) {
@@ -56,11 +57,17 @@ function Map(props) {
 }
 
 Map.propTypes = {
-  firstOffer: firstOfferProp,
+  defaultCity: defaultCityProp,
   placeOffers: placeOffersProp,
   selectedOffer: PropTypes.shape({
     id: PropTypes.number,
   }),
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  defaultCity: state.defaultCity,
+  placeOffers: state.placeOffers,
+});
+
+export {Map};
+export default connect(mapStateToProps, null)(Map);

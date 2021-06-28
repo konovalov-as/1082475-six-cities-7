@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 import Logo from '../logo/logo';
 import FavoritesItem from '../favorites-item/favorites-item';
@@ -64,4 +65,10 @@ FavoritesList.propTypes = {
   uniquePlaces: uniquePlaceProp,
 };
 
-export default FavoritesList;
+const mapStateToProps = (state) => ({
+  placeOffers: state.placeOffers,
+  uniquePlaces: state.uniquePlaces,
+});
+
+export {FavoritesList};
+export default connect(mapStateToProps, null)(FavoritesList);

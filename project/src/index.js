@@ -1,19 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
+
 import App from './components/app/app';
 
-import placeOffers, {uniquePlaces, firstOffer} from './mocks/place-offers';
-import {comments} from './mocks/comments';
-import {nearPlaceOffers} from './mocks/place-offers-near';
+import {reducer} from './store/reducer';
+
+const store = createStore(
+  reducer,
+  composeWithDevTools(),
+);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App
-      placeOffers = {placeOffers}
-      uniquePlaces = {uniquePlaces}
-      firstOffer = {firstOffer}
-      comments = {comments}
-      nearPlaceOffers = {nearPlaceOffers}
-    />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

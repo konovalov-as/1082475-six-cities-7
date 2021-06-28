@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
@@ -10,37 +11,24 @@ import Room from '../room/room';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
-import nearPlaceOffersProp from '../../mocks/place-offers-near.prop';
-import uniquePlaceProp, {firstOfferProp} from '../../mocks/place-offers.prop';
-import commentsProp from '../../mocks/comments.prop';
 
-function App({placeOffers, uniquePlaces, firstOffer, comments, nearPlaceOffers}) {
+function App(props) {
+  const {placeOffers} = props;
   const isFavorite = placeOffers.some((placeOffer) => (placeOffer.isFavorite === true));
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <Main
-            placeOffers = {placeOffers}
-            firstOffer = {firstOffer}
-          />
+          <Main />
         </Route>
         <Route exact path={AppRoute.ROOM}>
-          <Room
-            comments = {comments}
-            firstOffer = {firstOffer}
-            placeOffers = {placeOffers}
-            nearPlaceOffers = {nearPlaceOffers}
-          />
+          <Room />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
           {(!isFavorite) ?
             <FavoritesEmpty /> :
-            <FavoritesList
-              placeOffers = {placeOffers}
-              uniquePlaces = {uniquePlaces}
-            />}
+            <FavoritesList />}
         </Route>
         <Route exact path={AppRoute.SIGNIN}>
           <SignIn />
@@ -55,10 +43,11 @@ function App({placeOffers, uniquePlaces, firstOffer, comments, nearPlaceOffers})
 
 App.propTypes = {
   placeOffers: placeOffersProp,
-  uniquePlaces: uniquePlaceProp,
-  firstOffer: firstOfferProp,
-  comments: commentsProp,
-  nearPlaceOffers: nearPlaceOffersProp,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  placeOffers: state.placeOffers,
+});
+
+export {App};
+export default connect(mapStateToProps, null)(App);
