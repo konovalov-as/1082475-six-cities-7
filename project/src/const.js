@@ -7,3 +7,10 @@ export const AppRoute = {
 };
 
 export const firstCity = 'Paris';
+
+export const RATING_WEIGHT = 20;
+
+export const ReviewCount = {
+  start: 0,
+  end: 9,
+};

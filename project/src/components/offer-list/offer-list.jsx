@@ -3,15 +3,19 @@ import React from 'react';
 import OfferCard from '../offer-card/offer-card';
 
 import placeOffersProp from './offer-list.prop';
-import {handleCardHoverProp} from '../offer-card/offer-card.prop';
+import {ClassNameProp} from './offer-list.prop';
 
 function OfferList(props) {
-  const {placeOffers, handleCardHover} = props;
+  const {placeOffers, ClassName} = props;
 
   return (
-    <div className="cities__places-list places__list tabs__content">
-      {placeOffers.map((placeOffer) => (
-        <OfferCard key={placeOffer.id} placeOffer={placeOffer} handleCardHover={handleCardHover} />
+    <div className={`${ClassName.placesList} places__list ${ClassName.tab}`}>
+      {placeOffers.map((offer) => (
+        <OfferCard
+          key={offer.id}
+          offer={offer}
+          ClassName={ClassName}
+        />
       ))}
     </div>
   );
@@ -19,7 +23,7 @@ function OfferList(props) {
 
 OfferList.propTypes = {
   placeOffers: placeOffersProp,
-  handleCardHover: handleCardHoverProp,
+  ClassName: ClassNameProp,
 };
 
 export default OfferList;

@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import Logo from '../logo/logo';
+import Header from '../header/header';
 import Reviews from '../reviews/reviews';
+import OfferList from '../offer-list/offer-list';
 import Map from '../map/map';
-import NearOfferList from '../offer-list-near/offer-list-near';
 
 import commentsProp from '../../mocks/comments.prop';
 import {defaultCityProp} from '../../mocks/place-offers.prop';
@@ -36,34 +36,17 @@ function Room(props) {
   const mapNearOffers = nearOffers.offers.slice();
   mapNearOffers.push(placeOffers[idOffer - 1]);
 
+  const isActiveLogoLink = false;
+
+  const ClassName = {
+    placesList: 'near-places__list',
+    card: 'near-places__card',
+    imageWrap: 'near-places__image-wrapper',
+  };
+
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header isActiveLogoLink={isActiveLogoLink} />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -193,7 +176,7 @@ function Room(props) {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOfferList nearOffers = {nearOffers.offers} />
+            <OfferList placeOffers={nearOffers.offers} ClassName={ClassName} />
           </section>
         </div>
       </main>

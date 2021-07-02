@@ -35,3 +35,10 @@ export default PropTypes.arrayOf(PropTypes.exact({
   id: PropTypes.number.isRequired,
 }).isRequired,
 ).isRequired;
+
+export const ClassNameProp = PropTypes.exact({
+  placesList: PropTypes.string.isRequired,
+  tab: PropTypes.string,
+  card: PropTypes.string.isRequired,
+  imageWrap: PropTypes.string.isRequired,
+}).isRequired;

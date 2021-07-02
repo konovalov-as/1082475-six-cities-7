@@ -2,15 +2,8 @@ import React from 'react';
 
 import {commentProp} from '../../mocks/comments.prop';
 
-const RATING_WEIGHT = 20;
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-function formatDate(date) {
-  const monthIndex = date.getMonth();
-  const year = date.getFullYear();
-
-  return `${MONTHS[monthIndex]} ${year}`;
-}
+import {formatDate} from '../../utils/formate-date';
+import {RATING_WEIGHT} from '../../const';
 
 function ReviewsItem(props) {
   const {comment} = props;

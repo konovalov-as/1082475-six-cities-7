@@ -13,11 +13,13 @@ const initialState = {
   nearPlaceOffers,
   uniquePlaces,
   listCities,
+  selectedOffer: null,
 };
 
 function fillListOffers(state, action) {
   const filteredOffers = [];
   const activeCity = action.payload;
+  defaultCity.name = action.payload;
   const currentCity = {
     ...defaultCity,
   };
@@ -38,12 +40,24 @@ function fillListOffers(state, action) {
   };
 }
 
+function setCurrentOffer(state, action) {
+  const currentCardId = action.payload;
+  const currentOffer = placeOffers.find((placeOffer) => placeOffer.id === currentCardId);
+
+  return {
+    ...state,
+    selectedOffer: currentOffer,
+  };
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_CITY:
       return fillListOffers(state, action);
     case ActionType.FILL_LIST_OFFERS:
       return fillListOffers(state, action);
+    case ActionType.SET_CURRENT_OFFER:
+      return setCurrentOffer(state, action);
     case ActionType.RESET_OFFER:
       return {
         ...initialState,

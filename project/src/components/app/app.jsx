@@ -1,21 +1,14 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
-import FavoritesList from '../favorites-list/favorites-list';
-import FavoritesEmpty from '../favorites-empty/favorites-empty';
+import FavoritesPage from '../favorites-page/favorites-page';
 import Room from '../room/room';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-import placeOffersProp from '../offer-list/offer-list.prop';
-
 function App(props) {
-  const {placeOffers} = props;
-  const isFavorite = placeOffers.some((placeOffer) => (placeOffer.isFavorite === true));
-
   return (
     <BrowserRouter>
       <Switch>
@@ -26,9 +19,7 @@ function App(props) {
           <Room />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          {(!isFavorite) ?
-            <FavoritesEmpty /> :
-            <FavoritesList />}
+          <FavoritesPage />
         </Route>
         <Route exact path={AppRoute.SIGNIN}>
           <SignIn />
@@ -41,13 +32,4 @@ function App(props) {
   );
 }
 
-App.propTypes = {
-  placeOffers: placeOffersProp,
-};
-
-const mapStateToProps = (state) => ({
-  placeOffers: state.placeOffers,
-});
-
-export {App};
-export default connect(mapStateToProps, null)(App);
+export default App;

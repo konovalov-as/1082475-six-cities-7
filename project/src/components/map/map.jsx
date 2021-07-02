@@ -42,7 +42,7 @@ function Map(props) {
             lng: offer.city.location.longitude,
           },
           {
-            icon: (offer.id === selectedOffer.id)
+            icon: (selectedOffer !== null && selectedOffer !== undefined && offer.id === selectedOffer.id)
               ? currentCustomIcon
               : defaultCustomIcon,
           })

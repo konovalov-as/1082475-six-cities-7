@@ -4,24 +4,12 @@ import ReviewsItem from '../reviews-item/reviews-item';
 
 import {commentsProp} from '../../mocks/comments.prop';
 
-const ReviewCount = {
-  start: 0,
-  end: 9,
-};
-
-const sortCommentsByDate = (commentA, commentB) => {
-  if (commentA.date > commentB.date) {
-    return -1;
-  }
-  if (commentA.date < commentB.date) {
-    return 1;
-  }
-  return 0;
-};
+import {ReviewCount} from '../../const';
+import {sortComments} from '../../utils/sort-comments';
 
 function ReviewsList({comment}) {
   const comments = comment.comments;
-  const sortingComments = comments.slice().sort(sortCommentsByDate);
+  const sortingComments = sortComments(comments);
 
   return (
     <ul className="reviews__list">
