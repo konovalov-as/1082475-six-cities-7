@@ -1,26 +1,31 @@
 import {useEffect, useState} from 'react';
 import leaflet from 'leaflet';
 
-function useMap(mapRef, firstOffer) {
+function useMap(mapRef, defaultCity) {
   const [map, setMap] = useState(null);
+  const [currentCity] = useState(defaultCity);
 
   useEffect(() => {
     if (mapRef.current !== null && map === null) {
       const instance = leaflet.map(mapRef.current, {
         center: {
-          lat: firstOffer.location.latitude,
-          lng: firstOffer.location.longitude,
+          lat: currentCity.location.latitude,
+          lng: currentCity.location.longitude,
         },
-        zoom: firstOffer.location.zoom,
+        zoom: currentCity.location.zoom,
       });
 
       leaflet
-        .tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'})
+        .tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'})
         .addTo(instance);
 
       setMap(instance);
     }
-  }, [mapRef, map, firstOffer]);
+
+    return () => {
+      mapRef = null;
+    };
+  }, [mapRef, map, currentCity]);
 
   return map;
 }

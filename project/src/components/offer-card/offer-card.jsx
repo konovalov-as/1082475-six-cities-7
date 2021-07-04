@@ -1,61 +1,76 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/action';
 
 import placeOfferProp from '../offer-card/offer-card.prop';
-import {handleCardHoverProp} from '../offer-card/offer-card.prop';
+import {ClassNameProp} from '../offer-list/offer-list.prop';
+
+import {RATING_WEIGHT} from '../../const';
 
 function OfferCard(props) {
-  const {placeOffer, handleCardHover} = props;
+  const {offer, ClassName, setCurrentOffer} = props;
+  const ratingValue = `${offer.rating * RATING_WEIGHT}%`;
 
   function handleMouseOver(evt) {
-    const currentOffer = Number(evt.target.id);
-    if (placeOffer.id === currentOffer) {
-      handleCardHover(currentOffer);
-    }
+    const currentCardId = Number(evt.target.id);
+    setCurrentOffer(currentCardId);
   }
 
   return (
-    <article className="cities__place-card place-card"
-      id={placeOffer.id}
+    <article
+      className={`${ClassName.card} place-card`}
+      id={offer.id}
       onMouseOver={handleMouseOver}
     >
-      {placeOffer.isPremium ? <div className="place-card__mark"><span>Premium</span></div> : ''}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${placeOffer.id}`}>
-          <img className="place-card__image" src={placeOffer.previewImage} width="260" height="200" alt="Place image" id={placeOffer.id} />
+      {offer.isPremium && <div className="place-card__mark"><span>Premium</span></div>}
+      <div className={`${ClassName.imageWrap} place-card__image-wrapper`}>
+        <Link to={`/offer/${offer.id}`}>
+          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{placeOffer.price}</b>
+            <b className="place-card__price-value">&euro;80</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className={`place-card__bookmark-button ${offer.isFavorite && 'place-card__bookmark-button--active'} button`}  type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: ratingValue}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{placeOffer.type}</a>
+          <Link to={`/offer/${offer.id}`}>
+            {offer.title}
+          </Link>
         </h2>
-        <p className="place-card__type">{placeOffer.type}</p>
+        <p className="place-card__type">{offer.type.charAt(0).toUpperCase() + offer.type.slice(1)}</p>
       </div>
     </article>
   );
 }
 
 OfferCard.propTypes = {
-  placeOffer: placeOfferProp,
-  handleCardHover: handleCardHoverProp,
+  offer: placeOfferProp,
+  ClassName: ClassNameProp,
+  setCurrentOffer: PropTypes.func.isRequired,
 };
 
-export default OfferCard;
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentOffer(cardId) {
+    dispatch(ActionCreator.setCurrentOffer(cardId));
+  },
+});
+
+export {OfferCard};
+export default connect(null, mapDispatchToProps)(OfferCard);

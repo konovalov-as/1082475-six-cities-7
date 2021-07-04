@@ -4,36 +4,22 @@ import {AppRoute} from '../../const';
 
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
-import FavoritesList from '../favorites-list/favorites-list';
-import FavoritesEmpty from '../favorites-empty/favorites-empty';
+import FavoritesPage from '../favorites-page/favorites-page';
 import Room from '../room/room';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-import placeOffersProp from '../offer-list/offer-list.prop';
-import uniquePlaceProp, {firstOfferProp} from '../../mocks/place-offers.prop';
-
-function App({placeOffers, uniquePlaces, firstOffer}) {
-  const isFavorite = placeOffers.some((placeOffer) => (placeOffer.isFavorite === true));
-
+function App(props) {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
-          <Main
-            placeOffers = {placeOffers}
-            firstOffer = {firstOffer}
-          />
+          <Main />
         </Route>
         <Route exact path={AppRoute.ROOM}>
           <Room />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          {(!isFavorite) ?
-            <FavoritesEmpty /> :
-            <FavoritesList
-              placeOffers = {placeOffers}
-              uniquePlaces = {uniquePlaces}
-            />}
+          <FavoritesPage />
         </Route>
         <Route exact path={AppRoute.SIGNIN}>
           <SignIn />
@@ -45,11 +31,5 @@ function App({placeOffers, uniquePlaces, firstOffer}) {
     </BrowserRouter>
   );
 }
-
-App.propTypes = {
-  placeOffers: placeOffersProp,
-  uniquePlaces: uniquePlaceProp,
-  firstOffer: firstOfferProp,
-};
 
 export default App;

@@ -266,9 +266,13 @@ function filterPlaces(place, index) {
 
 export const uniquePlaces = mapPlaces.filter(filterPlaces);
 
-export const firstOffer = {
-  name: 'Amsterdam',
-  location: { latitude: 52.38333, longitude: 4.9, zoom: 7 },
+export const defaultCity = {
+  name: 'Paris',
+  location: {
+    latitude: 48.85661,
+    longitude: 2.351499,
+    zoom: 7,
+  },
 };
 
 export default placeOffers;

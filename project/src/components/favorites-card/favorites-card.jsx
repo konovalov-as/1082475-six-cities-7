@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 import placeOfferProp from '../offer-card/offer-card.prop';
 
-const RATING_WEIGHT = 20;
+import {RATING_WEIGHT} from '../../const';
 
 function FavoritesCard({favoritesOffer}) {
   const ratingValue = `${favoritesOffer.rating * RATING_WEIGHT}%`;
