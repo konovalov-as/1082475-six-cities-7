@@ -5,7 +5,7 @@ import ReviewsItem from '../reviews-item/reviews-item';
 import {commentsProp} from '../../mocks/comments.prop';
 
 import {ReviewCount} from '../../const';
-import {sortComments} from '../../utils/sort-comments';
+import {sortComments} from '../../utils/sorting';
 
 function ReviewsList({comment}) {
   const comments = comment.comments;
