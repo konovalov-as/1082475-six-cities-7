@@ -36,7 +36,7 @@ function Header(props) {
 }
 
 Header.propTypes = {
-  isActiveLogoLink: PropTypes.bool.isRequired,
+  isActiveLogoLink: PropTypes.bool,
 };
 
 export default Header;

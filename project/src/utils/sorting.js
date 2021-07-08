@@ -8,6 +8,10 @@ function sortCommentsByDate (commentA, commentB) {
   return 0;
 }
 
+export function sortComments(comments) {
+  return comments.sort(sortCommentsByDate);
+}
+
 function sortByPriceToHigh (offerA, offerB) {
   if (offerA.price > offerB.price) {
     return 1;
@@ -48,8 +52,4 @@ function sortByRatedToFirst (offerA, offerB) {
 
 export function sortOffersByRatedToFirst(offers) {
   return offers.slice().sort(sortByRatedToFirst);
-}
-
-export function sortComments(comments) {
-  return comments.slice().sort(sortCommentsByDate);
 }

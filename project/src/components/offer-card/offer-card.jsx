@@ -10,19 +10,25 @@ import {ClassNameProp} from '../offer-list/offer-list.prop';
 import {RATING_WEIGHT} from '../../const';
 
 function OfferCard(props) {
-  const {offer, ClassName, setCurrentOffer} = props;
+  const {offer, ClassName, setCurrentOffer, removeCurrentOffer} = props;
   const ratingValue = `${offer.rating * RATING_WEIGHT}%`;
 
-  function handleMouseOver(evt) {
-    const currentCardId = Number(evt.target.id);
+  function handleMouseEnter(evt) {
+    const currentCardId = Number(evt.currentTarget.id);
     setCurrentOffer(currentCardId);
+  }
+
+  function handleMouseLeave(evt) {
+    const currentCardId = Number(evt.currentTarget.id);
+    removeCurrentOffer(currentCardId);
   }
 
   return (
     <article
       className={`${ClassName.card} place-card`}
       id={offer.id}
-      onMouseOver={handleMouseOver}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {offer.isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className={`${ClassName.imageWrap} place-card__image-wrapper`}>
@@ -64,11 +70,15 @@ OfferCard.propTypes = {
   offer: placeOfferProp,
   ClassName: ClassNameProp,
   setCurrentOffer: PropTypes.func.isRequired,
+  removeCurrentOffer: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentOffer(cardId) {
     dispatch(ActionCreator.setCurrentOffer(cardId));
+  },
+  removeCurrentOffer(cardId) {
+    dispatch(ActionCreator.removeCurrentOffer(cardId));
   },
 });
 

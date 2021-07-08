@@ -2,6 +2,7 @@ export const ActionType = {
   CHANGE_CITY: 'offer/changeCity',
   FILL_LIST_OFFERS: 'offer/fillListOffers',
   SET_CURRENT_OFFER: 'offer/setCurrentOffer',
+  REMOVE_CURRENT_OFFER: 'offer/removeCurrentOffer',
   SORT_OFFERS: 'offer/sortOffers',
   RESET_OFFER: 'offer/reset',
 };
@@ -17,6 +18,10 @@ export const ActionCreator = {
   }),
   setCurrentOffer: (cardId) => ({
     type: ActionType.SET_CURRENT_OFFER,
+    payload: cardId,
+  }),
+  removeCurrentOffer: (cardId) => ({
+    type: ActionType.REMOVE_CURRENT_OFFER,
     payload: cardId,
   }),
   sortOffers: (payload) => ({

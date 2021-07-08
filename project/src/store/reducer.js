@@ -90,6 +90,11 @@ const reducer = (state = initialState, action) => {
       return fillListOffers(state, action);
     case ActionType.SET_CURRENT_OFFER:
       return setCurrentOffer(state, action);
+    case ActionType.REMOVE_CURRENT_OFFER:
+      return {
+        ...state,
+        selectedOffer: null,
+      };
     case ActionType.SORT_OFFERS:
       return sortOffers(state, action);
     case ActionType.RESET_OFFER:

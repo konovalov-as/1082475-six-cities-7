@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import Header from  '../header/header';
 import Footer from '../footer/footer';
-import FavoritesList from '../favorites-list/favorites-list';
+import FavoriteSection from '../favorite-section/favorite-section';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
@@ -19,7 +19,7 @@ function FavoritesPage(props) {
       <Header />
       <main className={`page__main page__main--favorites ${isFavoriteEmpty && 'page__main--favorites-empty'}`}>
         <div className="page__favorites-container container">
-          {!isFavoriteEmpty ? <FavoritesEmpty /> : <FavoritesList />}
+          {!isFavoriteEmpty ? <FavoritesEmpty /> : <FavoriteSection />}
         </div>
       </main>
       <Footer />

@@ -8,7 +8,7 @@ import {ReviewCount} from '../../const';
 import {sortComments} from '../../utils/sorting';
 
 function ReviewsList({comment}) {
-  const comments = comment.comments;
+  const { comments } = comment;
   const sortingComments = sortComments(comments);
 
   return (
