@@ -6,7 +6,7 @@ import FavoritesItem from '../favorites-item/favorites-item';
 import placeOffersProp from '../offer-list/offer-list.prop';
 import uniquePlaceProp from '../../mocks/place-offers.prop';
 
-function FavoritesList(props) {
+function FavoriteSection(props) {
   const {placeOffers, uniquePlaces} = props;
 
   return (
@@ -22,7 +22,7 @@ function FavoritesList(props) {
   );
 }
 
-FavoritesList.propTypes = {
+FavoriteSection.propTypes = {
   placeOffers: placeOffersProp,
   uniquePlaces: uniquePlaceProp,
 };
@@ -32,5 +32,5 @@ const mapStateToProps = (state) => ({
   uniquePlaces: state.uniquePlaces,
 });
 
-export {FavoritesList};
-export default connect(mapStateToProps, null)(FavoritesList);
+export {FavoriteSection};
+export default connect(mapStateToProps, null)(FavoriteSection);

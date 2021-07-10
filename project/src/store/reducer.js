@@ -1,5 +1,7 @@
 import {ActionType} from './action';
 
+import {sortOffersByPriceToHigh, sortOffersByPriceToLow, sortOffersByRatedToFirst} from '../utils/sorting';
+
 import placeOffers, {defaultCity} from '../mocks/place-offers';
 import {comments} from '../mocks/comments';
 import {nearPlaceOffers} from '../mocks/place-offers-near';
@@ -50,6 +52,36 @@ function setCurrentOffer(state, action) {
   };
 }
 
+function sortOffers(state, action) {
+  let sortingOffer = [];
+
+  switch (action.payload.sortingKind) {
+    case 0:
+      initialState.placeOffers.map((placeOffer) => {
+        if (placeOffer.city.name === state.defaultCity.name) {
+          sortingOffer.push(placeOffer);
+        }
+      });
+      break;
+    case 1:
+      sortingOffer = sortOffersByPriceToHigh(action.payload.offers);
+      break;
+    case 2:
+      sortingOffer = sortOffersByPriceToLow(action.payload.offers);
+      break;
+    case 3:
+      sortingOffer = sortOffersByRatedToFirst(action.payload.offers);
+      break;
+    default:
+      return sortingOffer;
+  }
+
+  return {
+    ...state,
+    placeOffers: sortingOffer,
+  };
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_CITY:
@@ -58,6 +90,13 @@ const reducer = (state = initialState, action) => {
       return fillListOffers(state, action);
     case ActionType.SET_CURRENT_OFFER:
       return setCurrentOffer(state, action);
+    case ActionType.REMOVE_CURRENT_OFFER:
+      return {
+        ...state,
+        selectedOffer: null,
+      };
+    case ActionType.SORT_OFFERS:
+      return sortOffers(state, action);
     case ActionType.RESET_OFFER:
       return {
         ...initialState,

@@ -13,7 +13,7 @@ function Logo(props) {
 }
 
 Logo.propTypes = {
-  isActiveLogoLink: PropTypes.bool.isRequired,
+  isActiveLogoLink: PropTypes.bool,
 };
 
 export default Logo;
