@@ -7,12 +7,12 @@ import Reviews from '../reviews/reviews';
 import OfferList from '../offer-list/offer-list';
 import Map from '../map/map';
 
-import {defaultCityProp} from '../../const.prop';
+import {cityProp} from '../../const.prop';
 import placeOffersProp from '../offer-list/offer-list.prop';
 import {commentsProp} from '../reviews/reviews.prop';
 
 function Room(props) {
-  const {defaultCity, placeOffers, detailOfferInfo, offerId} = props;
+  const {city, placeOffers, detailOfferInfo, offerId} = props;
   const isActiveLogoLink = false;
 
   const ClassName = {
@@ -147,7 +147,7 @@ function Room(props) {
             </div>
           </div>
           <section className="property__map map">
-            <Map defaultCity={defaultCity} placeOffers={detailOfferInfo.nearbyOffers} selectedOffer={placeOffers[offerId - 1]} />
+            <Map city={city} placeOffers={detailOfferInfo.nearbyOffers} selectedOffer={placeOffers[offerId - 1]} />
           </section>
         </section>
         <div className="container">
@@ -162,7 +162,7 @@ function Room(props) {
 }
 
 Room.propTypes = {
-  defaultCity: defaultCityProp,
+  city: cityProp,
   placeOffers: placeOffersProp,
   detailOfferInfo: PropTypes.exact({
     comments: commentsProp,
@@ -172,7 +172,7 @@ Room.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  defaultCity: state.defaultCity,
+  city: state.city,
   placeOffers: state.placeOffers,
   detailOfferInfo: state.detailOfferInfo,
 });

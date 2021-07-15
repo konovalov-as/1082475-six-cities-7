@@ -4,7 +4,6 @@ import ReviewsItem from '../reviews-item/reviews-item';
 
 import {commentsProp} from './reviews-list.prop';
 
-import {ReviewCount} from '../../const';
 import {sortComments} from '../../utils/sorting';
 
 function ReviewsList({comments}) {
@@ -12,7 +11,7 @@ function ReviewsList({comments}) {
 
   return (
     <ul className="reviews__list">
-      {sortingComments.slice(ReviewCount.start, ReviewCount.end).map((commentItem) => (
+      {sortingComments.map((commentItem) => (
         <ReviewsItem key={commentItem.id} commentItem={commentItem} />
       ))}
     </ul>

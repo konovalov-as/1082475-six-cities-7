@@ -4,7 +4,6 @@ export const ActionType = {
   SET_CURRENT_OFFER: 'offer/setCurrentOffer',
   REMOVE_CURRENT_OFFER: 'offer/removeCurrentOffer',
   SORT_OFFERS: 'offer/sortOffers',
-  RESET_OFFER: 'offer/reset',
   LOAD_OFFERS: 'data/offers',
   LOAD_NEARBY_OFFER: 'data/nearbyOffer',
   LOAD_OFFER_COMMENTS: 'data/offerComments',
@@ -13,13 +12,13 @@ export const ActionType = {
 };
 
 export const ActionCreator = {
-  changeCity: (defaultCity) => ({
+  changeCity: (city) => ({
     type: ActionType.CHANGE_CITY,
-    payload: defaultCity,
+    payload: city,
   }),
-  fillListOffers: (defaultCity) =>({
+  fillListOffers: (city) =>({
     type: ActionType.FILL_LIST_OFFERS,
-    payload: defaultCity,
+    payload: city,
   }),
   setCurrentOffer: (cardId) => ({
     type: ActionType.SET_CURRENT_OFFER,
@@ -32,9 +31,6 @@ export const ActionCreator = {
   sortOffers: (payload) => ({
     type: ActionType.SORT_OFFERS,
     payload: payload,
-  }),
-  resetOffer: () => ({
-    type: ActionType.RESET_OFFER,
   }),
   loadOffers: (offers) => ({
     type: ActionType.LOAD_OFFERS,

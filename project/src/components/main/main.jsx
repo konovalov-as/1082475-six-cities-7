@@ -9,12 +9,12 @@ import Places from '../places/places';
 import PlacesEmpty from '../places-empty/places-empty';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
-import listCitiesProp, {defaultCityProp} from '../../const.prop';
+import listCitiesProp, {cityProp} from '../../const.prop';
 
 function Main(props) {
-  const {defaultCity, placeOffers, listCities, fillListOffers, changeCity} = props;
+  const {city, placeOffers, listCities, fillListOffers, changeCity} = props;
 
-  const [activeCity] = useState(defaultCity);
+  const [activeCity] = useState(city);
   useEffect(() => {
     fillListOffers(activeCity.name);
   }, [activeCity]);
@@ -30,7 +30,7 @@ function Main(props) {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {listCities.map((itemCity) => (
-                <ItemCity key={itemCity} itemCity={itemCity} changeCity={changeCity} defaultCity={defaultCity} />
+                <ItemCity key={itemCity} itemCity={itemCity} changeCity={changeCity} city={city} />
               ))}
             </ul>
           </section>
@@ -45,14 +45,14 @@ function Main(props) {
 
 Main.propTypes = {
   placeOffers: placeOffersProp,
-  defaultCity: defaultCityProp,
+  city: cityProp,
   listCities: listCitiesProp,
   fillListOffers: PropTypes.func.isRequired,
   changeCity: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  defaultCity: state.defaultCity,
+  city: state.city,
   placeOffers: state.placeOffers,
   listCities: state.listCities,
 });

@@ -2,10 +2,10 @@ import {ActionType} from './action';
 
 import {sortOffersByPriceToHigh, sortOffersByPriceToLow, sortOffersByRatedToFirst} from '../utils/sorting';
 
-import { defaultCity, listCities, AuthorizationStatus } from '../const';
+import { city, listCities, AuthorizationStatus } from '../const';
 
 const initialState = {
-  defaultCity,
+  city,
   originOffers: [],
   placeOffers: [],
   detailOfferInfo: {
@@ -23,23 +23,19 @@ const initialState = {
 function fillListOffers(state, action) {
   const filteredOffers = [];
   const activeCity = action.payload;
-  defaultCity.name = action.payload;
-  const currentCity = {
-    ...defaultCity,
-  };
 
   state.originOffers.map((originOffer) => {
     if (originOffer.city.name === activeCity) {
       filteredOffers.push(originOffer);
-      currentCity.name = originOffer.city.name;
-      currentCity.location.latitude = originOffer.city.location.latitude;
-      currentCity.location.longitude = originOffer.city.location.longitude;
+      city.name = originOffer.city.name;
+      city.location.latitude = originOffer.city.location.latitude;
+      city.location.longitude = originOffer.city.location.longitude;
     }
   });
 
   return {
     ...state,
-    defaultCity: currentCity,
+    city,
     placeOffers: filteredOffers,
   };
 }
@@ -61,7 +57,7 @@ function sortOffers(state, action) {
   switch (action.payload.sortingKind) {
     case 0:
       state.originOffers.map((originOffer) => {
-        if (originOffer.city.name === state.defaultCity.name) {
+        if (originOffer.city.name === state.city.name) {
           sortingOffer.push(originOffer);
         }
       });
@@ -97,7 +93,7 @@ function setUniquePlaces (placeOffers) {
   }
 
   return mapPlaces.filter(filterPlaces);
-};
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -114,10 +110,6 @@ const reducer = (state = initialState, action) => {
       };
     case ActionType.SORT_OFFERS:
       return sortOffers(state, action);
-    case ActionType.RESET_OFFER:
-      return {
-        ...initialState,
-      };
     case ActionType.LOAD_OFFERS:
       setUniquePlaces(action.payload);
       return {
