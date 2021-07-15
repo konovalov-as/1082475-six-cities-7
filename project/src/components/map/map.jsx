@@ -9,7 +9,7 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
-import {defaultCityProp} from '../../mocks/place-offers.prop';
+import {defaultCityProp} from '../../const.prop';
 
 const Marker = {
   DEFAULT: 'img/pin.svg',

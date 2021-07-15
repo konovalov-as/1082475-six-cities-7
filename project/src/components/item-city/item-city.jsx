@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {defaultCityProp} from '../../mocks/place-offers.prop';
+import {defaultCityProp} from '../../const.prop';
 
 function getStyleLink(defaultCity, itemCity) {
   return (defaultCity.name === itemCity) ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item';

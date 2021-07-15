@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Header from '../header/header';
@@ -6,36 +7,12 @@ import Reviews from '../reviews/reviews';
 import OfferList from '../offer-list/offer-list';
 import Map from '../map/map';
 
-import commentsProp from '../../mocks/comments.prop';
-import {defaultCityProp} from '../../mocks/place-offers.prop';
+import {defaultCityProp} from '../../const.prop';
 import placeOffersProp from '../offer-list/offer-list.prop';
-import nearPlaceOffersProp from '../../mocks/place-offers-near.prop';
+import {commentsProp} from '../reviews/reviews.prop';
 
 function Room(props) {
-  const {defaultCity, placeOffers, comments, nearPlaceOffers} = props;
-
-  const url = window.location.pathname;
-  const urlItems = url.split('/');
-  const idOffer = Number(urlItems[2]);
-
-  let review = {};
-  let nearOffers = {};
-
-  comments.map((comment) => {
-    if (comment.id === idOffer) {
-      review = comment;
-    }
-  });
-
-  nearPlaceOffers.map((nearOffer) => {
-    if (nearOffer.id === idOffer) {
-      nearOffers = nearOffer;
-    }
-  });
-
-  const mapNearOffers = nearOffers.offers.slice();
-  mapNearOffers.push(placeOffers[idOffer - 1]);
-
+  const {defaultCity, placeOffers, detailOfferInfo, offerId} = props;
   const isActiveLogoLink = false;
 
   const ClassName = {
@@ -166,17 +143,17 @@ function Room(props) {
                   </p>
                 </div>
               </div>
-              <Reviews comment={review}/>
+              <Reviews comments={detailOfferInfo.comments}/>
             </div>
           </div>
           <section className="property__map map">
-            <Map defaultCity={defaultCity} placeOffers={mapNearOffers} selectedOffer={placeOffers[idOffer - 1]} />
+            <Map defaultCity={defaultCity} placeOffers={detailOfferInfo.nearbyOffers} selectedOffer={placeOffers[offerId - 1]} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferList placeOffers={nearOffers.offers} ClassName={ClassName} />
+            <OfferList placeOffers={detailOfferInfo.nearbyOffers} ClassName={ClassName} />
           </section>
         </div>
       </main>
@@ -185,17 +162,19 @@ function Room(props) {
 }
 
 Room.propTypes = {
-  comments: commentsProp,
   defaultCity: defaultCityProp,
   placeOffers: placeOffersProp,
-  nearPlaceOffers: nearPlaceOffersProp,
+  detailOfferInfo: PropTypes.exact({
+    comments: commentsProp,
+    nearbyOffers: placeOffersProp,
+  }).isRequired,
+  offerId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   defaultCity: state.defaultCity,
   placeOffers: state.placeOffers,
-  comments: state.comments,
-  nearPlaceOffers: state.nearPlaceOffers,
+  detailOfferInfo: state.detailOfferInfo,
 });
 
 export {Room};

@@ -2,20 +2,22 @@ import {ActionType} from './action';
 
 import {sortOffersByPriceToHigh, sortOffersByPriceToLow, sortOffersByRatedToFirst} from '../utils/sorting';
 
-import placeOffers, {defaultCity} from '../mocks/place-offers';
-import {comments} from '../mocks/comments';
-import {nearPlaceOffers} from '../mocks/place-offers-near';
-import {uniquePlaces} from '../mocks/place-offers';
-import {listCities} from '../mocks/list-cities';
+import { defaultCity, listCities, AuthorizationStatus } from '../const';
 
 const initialState = {
   defaultCity,
-  placeOffers,
-  comments,
-  nearPlaceOffers,
-  uniquePlaces,
+  originOffers: [],
+  placeOffers: [],
+  detailOfferInfo: {
+    nearbyOffers: [],
+    comments: [],
+  },
+  uniquePlaces: [],
   listCities,
   selectedOffer: null,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  isDataLoaded: false,
+  isDetailOfferInfoLoaded: false,
 };
 
 function fillListOffers(state, action) {
@@ -26,12 +28,12 @@ function fillListOffers(state, action) {
     ...defaultCity,
   };
 
-  initialState.placeOffers.slice().map((placeOffer) => {
-    if (placeOffer.city.name === activeCity) {
-      filteredOffers.push(placeOffer);
-      currentCity.name = placeOffer.city.name;
-      currentCity.location.latitude = placeOffer.city.location.latitude;
-      currentCity.location.longitude = placeOffer.city.location.longitude;
+  state.originOffers.map((originOffer) => {
+    if (originOffer.city.name === activeCity) {
+      filteredOffers.push(originOffer);
+      currentCity.name = originOffer.city.name;
+      currentCity.location.latitude = originOffer.city.location.latitude;
+      currentCity.location.longitude = originOffer.city.location.longitude;
     }
   });
 
@@ -44,7 +46,8 @@ function fillListOffers(state, action) {
 
 function setCurrentOffer(state, action) {
   const currentCardId = action.payload;
-  const currentOffer = placeOffers.find((placeOffer) => placeOffer.id === currentCardId);
+
+  const currentOffer = state.placeOffers.find((placeOffer) => placeOffer.id === currentCardId);
 
   return {
     ...state,
@@ -57,9 +60,9 @@ function sortOffers(state, action) {
 
   switch (action.payload.sortingKind) {
     case 0:
-      initialState.placeOffers.map((placeOffer) => {
-        if (placeOffer.city.name === state.defaultCity.name) {
-          sortingOffer.push(placeOffer);
+      state.originOffers.map((originOffer) => {
+        if (originOffer.city.name === state.defaultCity.name) {
+          sortingOffer.push(originOffer);
         }
       });
       break;
@@ -82,6 +85,20 @@ function sortOffers(state, action) {
   };
 }
 
+function setUniquePlaces (placeOffers) {
+  function mapPlace(placeOffer) {
+    return placeOffer.city.name;
+  }
+
+  const mapPlaces = placeOffers.map(mapPlace);
+
+  function filterPlaces(place, index) {
+    return mapPlaces.indexOf(place) === index;
+  }
+
+  return mapPlaces.filter(filterPlaces);
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_CITY:
@@ -100,6 +117,41 @@ const reducer = (state = initialState, action) => {
     case ActionType.RESET_OFFER:
       return {
         ...initialState,
+      };
+    case ActionType.LOAD_OFFERS:
+      setUniquePlaces(action.payload);
+      return {
+        ...state,
+        originOffers: action.payload,
+        placeOffers: action.payload,
+        isDataLoaded: true,
+      };
+    case ActionType.LOAD_NEARBY_OFFER:
+      return {
+        ...state,
+        detailOfferInfo: {
+          ...state.detailOfferInfo,
+          nearbyOffers: action.payload,
+        },
+      };
+    case ActionType.LOAD_OFFER_COMMENTS:
+      return {
+        ...state,
+        detailOfferInfo: {
+          ...state.detailOfferInfo,
+          comments: action.payload,
+        },
+        isDetailOfferInfoLoaded: true,
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     default:
       return state;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {defaultCityProp} from '../../mocks/place-offers.prop';
+import {defaultCityProp} from '../../const.prop';
 
 function PlacesEmpty(props) {
   const {defaultCity} = props;

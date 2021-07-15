@@ -5,7 +5,7 @@ import OfferList from '../offer-list/offer-list';
 import Map from '../map/map';
 import SortingOptions from '../sorting-options/sorting-options';
 
-import {defaultCityProp} from '../../mocks/place-offers.prop';
+import {defaultCityProp} from '../../const.prop';
 import placeOffersProp from '../offer-list/offer-list.prop';
 import placeOfferProp from '../offer-card/offer-card.prop';
 

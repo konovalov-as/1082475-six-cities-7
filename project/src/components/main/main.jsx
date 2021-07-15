@@ -9,8 +9,7 @@ import Places from '../places/places';
 import PlacesEmpty from '../places-empty/places-empty';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
-import {defaultCityProp} from '../../mocks/place-offers.prop';
-import listCitiesProp from '../../mocks/list-cities.prop';
+import listCitiesProp, {defaultCityProp} from '../../const.prop';
 
 function Main(props) {
   const {defaultCity, placeOffers, listCities, fillListOffers, changeCity} = props;
