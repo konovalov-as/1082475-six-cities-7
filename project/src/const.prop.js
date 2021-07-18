@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 export default PropTypes.arrayOf(PropTypes.string);
 
-export const defaultCityProp = PropTypes.shape({
+export const cityProp = PropTypes.shape({
   name: PropTypes.string.isRequired,
   location: PropTypes.shape({
     latitude: PropTypes.number.isRequired,

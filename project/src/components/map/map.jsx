@@ -9,7 +9,7 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
-import {defaultCityProp} from '../../mocks/place-offers.prop';
+import { cityProp } from '../../const.prop';
 
 const Marker = {
   DEFAULT: 'img/pin.svg',
@@ -29,17 +29,31 @@ const currentCustomIcon = leaflet.icon({
 });
 
 function Map(props) {
-  const {defaultCity, placeOffers, selectedOffer} = props;
+  const {city, placeOffers, selectedOffer} = props;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, defaultCity);
+  const map = useMap(mapRef, city);
+  const prevActiveOffer = useRef();
 
   useEffect(() => {
     if (map) {
+      prevActiveOffer.current = selectedOffer;
+
+      if (prevActiveOffer !== selectedOffer) {
+        [...map.getPane('markerPane').children]
+          .forEach((marker) => marker.remove());
+      }
+
+      map.flyTo([city.location.latitude, city.location.longitude]);
+
+      const latLngs =[];
+
       placeOffers.forEach((offer) => {
-        leaflet
+        const { latitude, longitude } = offer.location;
+
+        const marker = leaflet
           .marker({
-            lat: offer.city.location.latitude,
-            lng: offer.city.location.longitude,
+            lat: latitude,
+            lng: longitude,
           },
           {
             icon: (selectedOffer !== null && selectedOffer !== undefined && offer.id === selectedOffer.id)
@@ -47,7 +61,12 @@ function Map(props) {
               : defaultCustomIcon,
           })
           .addTo(map);
+
+        latLngs.push(marker.getLatLng());
       });
+
+      const bounds = leaflet.latLngBounds(latLngs);
+      map.fitBounds(bounds);
     }
   }, [map, placeOffers, selectedOffer]);
 
@@ -57,7 +76,7 @@ function Map(props) {
 }
 
 Map.propTypes = {
-  defaultCity: defaultCityProp,
+  city: cityProp,
   placeOffers: placeOffersProp,
   selectedOffer: PropTypes.shape({
     id: PropTypes.number,
@@ -65,7 +84,7 @@ Map.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  defaultCity: state.defaultCity,
+  city: state.city,
   placeOffers: state.placeOffers,
 });
 

@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import FavoritesItem from '../favorites-item/favorites-item';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
-import uniquePlaceProp from '../../mocks/place-offers.prop';
 
 function FavoriteSection(props) {
   const {placeOffers, uniquePlaces} = props;
@@ -24,7 +23,7 @@ function FavoriteSection(props) {
 
 FavoriteSection.propTypes = {
   placeOffers: placeOffersProp,
-  uniquePlaces: uniquePlaceProp,
+  uniquePlaces: placeOffersProp,
 };
 
 const mapStateToProps = (state) => ({

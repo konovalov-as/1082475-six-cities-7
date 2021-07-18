@@ -1,25 +1,25 @@
 import React from 'react';
 
-import {commentProp} from '../../mocks/comments.prop';
+import {commentProp} from './reviews-item.prop';
 
 import {formatDate} from '../../utils/formate-date';
 import {RATING_WEIGHT} from '../../const';
 
 function ReviewsItem(props) {
-  const {comment} = props;
-  const ratingValue = `${comment.rating * RATING_WEIGHT}%`;
+  const {commentItem} = props;
+  const ratingValue = `${commentItem.rating * RATING_WEIGHT}%`;
 
-  const date = new Date(comment.date);
+  const date = new Date(commentItem.date);
   const reviewsDate = formatDate(date);
 
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={comment.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
+          <img className="reviews__avatar user__avatar" src={commentItem.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
         </div>
         <span className="reviews__user-name">
-          {comment.user.name}
+          {commentItem.user.name}
         </span>
       </div>
       <div className="reviews__info">
@@ -30,16 +30,16 @@ function ReviewsItem(props) {
           </div>
         </div>
         <p className="reviews__text">
-          {comment.comment}
+          {commentItem.comment}
         </p>
-        <time className="reviews__time" dateTime={comment.date}>{reviewsDate}</time>
+        <time className="reviews__time" dateTime={commentItem.date}>{reviewsDate}</time>
       </div>
     </li>
   );
 }
 
 ReviewsItem.propTypes = {
-  comment: commentProp,
+  commentItem: commentProp,
 };
 
 export default ReviewsItem;

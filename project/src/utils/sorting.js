@@ -1,3 +1,5 @@
+import {ReviewCount} from '../const';
+
 function sortCommentsByDate (commentA, commentB) {
   if (commentA.date > commentB.date) {
     return -1;
@@ -9,7 +11,7 @@ function sortCommentsByDate (commentA, commentB) {
 }
 
 export function sortComments(comments) {
-  return comments.sort(sortCommentsByDate);
+  return comments.slice().sort(sortCommentsByDate).slice(ReviewCount.start, ReviewCount.end);
 }
 
 function sortByPriceToHigh (offerA, offerB) {
