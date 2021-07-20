@@ -36,3 +36,16 @@ export const adaptOfferCommentsToClient = (offerComment) => {
   delete adaptedOfferComment.user.is_pro;
   return adaptedOfferComment;
 };
+
+export const adaptUserToClient = (userInfo) => {
+  const adaptedUserInfo = {
+    ...userInfo,
+    avatarUrl: userInfo.avatar_url,
+    isPro: userInfo.is_pro,
+  };
+
+  delete adaptedUserInfo.avatar_url;
+  delete adaptedUserInfo.is_pro;
+
+  return adaptedUserInfo;
+};

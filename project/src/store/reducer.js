@@ -16,6 +16,14 @@ const initialState = {
   listCities,
   selectedOffer: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  authInfo: {
+    avatarUrl: '',
+    email: '',
+    id: 0,
+    isPro: false,
+    name: '',
+    token: '',
+  },
   isDataLoaded: false,
   isDetailOfferInfoLoaded: false,
 };
@@ -140,10 +148,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload,
       };
+    case ActionType.SET_AUTH_INFO:
+      return {
+        ...state,
+        authInfo: action.payload,
+      };
     case ActionType.LOGOUT:
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
+        authInfo: {},
       };
     default:
       return state;

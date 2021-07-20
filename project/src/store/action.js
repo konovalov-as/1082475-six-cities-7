@@ -8,7 +8,9 @@ export const ActionType = {
   LOAD_NEARBY_OFFER: 'data/nearbyOffer',
   LOAD_OFFER_COMMENTS: 'data/offerComments',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
+  SET_AUTH_INFO: 'user/setAuthInfo',
   LOGOUT: 'user/logout',
+  REDIRECT_TO_ROUTE: 'app/redirectToRoute',
 };
 
 export const ActionCreator = {
@@ -48,7 +50,15 @@ export const ActionCreator = {
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
   }),
+  setAuthInfo: (authInfo) => ({
+    type: ActionType.SET_AUTH_INFO,
+    payload: authInfo,
+  }),
   logout: () => ({
     type: ActionType.LOGOUT,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   }),
 };
