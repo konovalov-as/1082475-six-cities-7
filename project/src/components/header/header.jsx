@@ -74,7 +74,7 @@ Header.propTypes = {
   authInfo: PropTypes.shape({
     avatarUrl: PropTypes.string,
     email: PropTypes.string,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number,
     isPro: PropTypes.bool,
     name: PropTypes.string,
     token: PropTypes.string,
