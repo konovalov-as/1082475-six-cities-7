@@ -20,7 +20,7 @@ function Room(props) {
   const {city, placeOffers, detailOfferInfo, offerId} = props;
   const isActiveLogoLink = false;
 
-  const ClassName = {
+  const className = {
     placesList: 'near-places__list',
     card: 'near-places__card',
     imageWrap: 'near-places__image-wrapper',
@@ -114,7 +114,7 @@ function Room(props) {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OfferList placeOffers={detailOfferInfo.nearbyOffers} ClassName={ClassName} />
+            <OfferList placeOffers={detailOfferInfo.nearbyOffers} className={className} />
           </section>
         </div>
       </main>

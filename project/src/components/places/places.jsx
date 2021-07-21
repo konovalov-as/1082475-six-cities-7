@@ -12,7 +12,7 @@ import placeOfferProp from '../offer-card/offer-card.prop';
 function Places(props) {
   const {city, placeOffers, selectedOffer} = props;
 
-  const ClassName = {
+  const className = {
     placesList: 'cities__places-list',
     tab: 'tabs__content',
     card: 'cities__place-card',
@@ -25,7 +25,7 @@ function Places(props) {
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{placeOffers.length} places to stay in {city.name}</b>
         <SortingOptions />
-        {<OfferList placeOffers={placeOffers} ClassName={ClassName}/>}
+        {<OfferList placeOffers={placeOffers} className={className}/>}
       </section>
       <div className="cities__right-section">
         <Map selectedOffer={selectedOffer} />

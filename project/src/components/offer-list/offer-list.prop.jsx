@@ -36,7 +36,7 @@ export default PropTypes.arrayOf(PropTypes.exact({
 }).isRequired,
 ).isRequired;
 
-export const ClassNameProp = PropTypes.exact({
+export const classNameProp = PropTypes.exact({
   placesList: PropTypes.string.isRequired,
   tab: PropTypes.string,
   card: PropTypes.string.isRequired,

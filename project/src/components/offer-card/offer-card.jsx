@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 
 import placeOfferProp from '../offer-card/offer-card.prop';
-import {ClassNameProp} from '../offer-list/offer-list.prop';
+import {classNameProp} from '../offer-list/offer-list.prop';
 
 import {RATING_WEIGHT} from '../../const';
 
 function OfferCard(props) {
-  const {offer, ClassName, setCurrentOffer, removeCurrentOffer} = props;
+  const {offer, className, setCurrentOffer, removeCurrentOffer} = props;
   const ratingValue = `${offer.rating * RATING_WEIGHT}%`;
 
   function handleMouseEnter(evt) {
@@ -25,13 +25,13 @@ function OfferCard(props) {
 
   return (
     <article
-      className={`${ClassName.card} place-card`}
+      className={`${className.card} place-card`}
       id={offer.id}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {offer.isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className={`${ClassName.imageWrap} place-card__image-wrapper`}>
+      <div className={`${className.imageWrap} place-card__image-wrapper`}>
         <Link to={`/offer/${offer.id}`}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
         </Link>
@@ -68,7 +68,7 @@ function OfferCard(props) {
 
 OfferCard.propTypes = {
   offer: placeOfferProp,
-  ClassName: ClassNameProp,
+  className: classNameProp,
   setCurrentOffer: PropTypes.func.isRequired,
   removeCurrentOffer: PropTypes.func.isRequired,
 };
