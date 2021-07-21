@@ -7,7 +7,7 @@ import { toast } from '../utils/toast/toast';
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
     .then(({data}) => dispatch(ActionCreator.loadOffers(data.map((offer) => adaptOfferToClient(offer)))))
-    .catch(() => {})
+    .catch(() => {'No access to the server';})
 );
 
 export const fetchDetailOfferInfo = (offerId) => (dispatch, _getState, api) => {
@@ -16,7 +16,7 @@ export const fetchDetailOfferInfo = (offerId) => (dispatch, _getState, api) => {
     .catch(() => {});
   api.get(`${APIRoute.COMMENTS}/${offerId}`)
     .then(({data}) => dispatch(ActionCreator.loadOfferComments(data.map((offerComments) => adaptOfferCommentsToClient(offerComments)))))
-    .catch(() => {});
+    .catch(() => {'No access to the server';});
 };
 
 export const checkAuth = () => (dispatch, _getState, api) => (
@@ -60,4 +60,14 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)))
     .then(() => dispatch(ActionCreator.logout()))
     .catch(() => {})
+);
+
+export const postComment = ({comment, rating}, offerId) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.COMMENTS}/${offerId}`, {comment, rating})
+    .then(({data}) => {
+      dispatch(ActionCreator.postOfferComment(data.map((offerComments) => adaptOfferCommentsToClient(offerComments))));
+    })
+    .catch(() => {
+      toast('You are not authorized');
+    })
 );

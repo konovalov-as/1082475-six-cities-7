@@ -6,7 +6,8 @@ export const ActionType = {
   SORT_OFFERS: 'offer/sortOffers',
   LOAD_OFFERS: 'data/offers',
   LOAD_NEARBY_OFFER: 'data/nearbyOffer',
-  LOAD_OFFER_COMMENTS: 'data/offerComments',
+  LOAD_OFFER_COMMENTS: 'data/loadOfferComments',
+  POST_OFFER_COMMENT: 'data/postOfferComment',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   SET_AUTH_INFO: 'user/setAuthInfo',
   LOGOUT: 'user/logout',
@@ -45,6 +46,10 @@ export const ActionCreator = {
   loadOfferComments: (offerComments) => ({
     type: ActionType.LOAD_OFFER_COMMENTS,
     payload: offerComments,
+  }),
+  postOfferComment: (comment) => ({
+    type: ActionType.POST_OFFER_COMMENT,
+    payload: comment,
   }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,

@@ -1,4 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {postComment} from '../../store/api-action';
 
 const REVIEW_NAME = 'review';
 const ReviewLength = {
@@ -8,6 +11,7 @@ const ReviewLength = {
 };
 
 function ReviewsForm(props) {
+  const {onSubmit, offerId} = props;
   const submitButton = useRef();
 
   const [review, setReview] = useState({
@@ -32,7 +36,11 @@ function ReviewsForm(props) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    return review;
+
+    onSubmit({
+      comment: review.review,
+      rating: review.rating,
+    }, offerId);
   }
 
   useEffect(() => {
@@ -139,4 +147,16 @@ function ReviewsForm(props) {
   );
 }
 
-export default ReviewsForm;
+ReviewsForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  offerId: PropTypes.number.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(commentPost, offerId) {
+    dispatch(postComment(commentPost, offerId));
+  },
+});
+
+export {ReviewsForm};
+export default connect(null, mapDispatchToProps)(ReviewsForm);

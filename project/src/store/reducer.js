@@ -143,6 +143,14 @@ const reducer = (state = initialState, action) => {
         },
         isDetailOfferInfoLoaded: true,
       };
+    case ActionType.POST_OFFER_COMMENT:
+      return {
+        ...state,
+        detailOfferInfo: {
+          ...state.detailOfferInfo,
+          comments: action.payload,
+        },
+      };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,

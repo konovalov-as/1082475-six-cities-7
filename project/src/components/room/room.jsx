@@ -104,7 +104,7 @@ function Room(props) {
                   </p>
                 </div>
               </div>
-              <Reviews comments={detailOfferInfo.comments}/>
+              <Reviews comments={detailOfferInfo.comments} offerId={offerId}/>
             </div>
           </div>
           <section className="property__map map">
