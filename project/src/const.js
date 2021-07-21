@@ -13,6 +13,11 @@ export const ReviewCount = {
   end: 9,
 };
 
+export const OfferPhotoCount = {
+  start: 0,
+  end: 6,
+};
+
 export const AuthorizationStatus = {
   AUTH: 'AUTH',
   NO_AUTH: 'NO_AUTH',
