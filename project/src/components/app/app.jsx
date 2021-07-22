@@ -1,9 +1,11 @@
 import React from 'react';
 import {PropTypes} from 'prop-types';
 import { connect } from 'react-redux';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {isCheckedAuth} from '../../utils/authorization-status';
+import PrivateRoute from '../private-route/private-route';
+import browserHistory from '../../browser-history';
 
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
@@ -24,7 +26,7 @@ function App(props) {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
           <Main />
@@ -40,9 +42,12 @@ function App(props) {
         }}
         >
         </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesPage />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => <FavoritesPage />}
+        >
+        </PrivateRoute>
         <Route exact path={AppRoute.SIGNIN}>
           <SignIn />
         </Route>

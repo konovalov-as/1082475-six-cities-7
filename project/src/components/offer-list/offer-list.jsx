@@ -3,18 +3,18 @@ import React from 'react';
 import OfferCard from '../offer-card/offer-card';
 
 import placeOffersProp from './offer-list.prop';
-import {ClassNameProp} from './offer-list.prop';
+import {classNameProp} from './offer-list.prop';
 
 function OfferList(props) {
-  const {placeOffers, ClassName} = props;
+  const {placeOffers, className} = props;
 
   return (
-    <div className={`${ClassName.placesList} places__list ${ClassName.tab}`}>
+    <div className={`${className.placesList} places__list ${className.tab}`}>
       {placeOffers.map((offer) => (
         <OfferCard
           key={offer.id}
           offer={offer}
-          ClassName={ClassName}
+          className={className}
         />
       ))}
     </div>
@@ -23,7 +23,7 @@ function OfferList(props) {
 
 OfferList.propTypes = {
   placeOffers: placeOffersProp,
-  ClassName: ClassNameProp,
+  className: classNameProp,
 };
 
 export default OfferList;
