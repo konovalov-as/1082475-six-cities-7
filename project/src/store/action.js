@@ -14,56 +14,66 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: 'app/redirectToRoute',
 };
 
-export const ActionCreator = {
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: city,
-  }),
-  fillListOffers: (city) =>({
-    type: ActionType.FILL_LIST_OFFERS,
-    payload: city,
-  }),
-  setCurrentOffer: (cardId) => ({
-    type: ActionType.SET_CURRENT_OFFER,
-    payload: cardId,
-  }),
-  removeCurrentOffer: (cardId) => ({
-    type: ActionType.REMOVE_CURRENT_OFFER,
-    payload: cardId,
-  }),
-  sortOffers: (payload) => ({
-    type: ActionType.SORT_OFFERS,
-    payload: payload,
-  }),
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
-    payload: offers,
-  }),
-  loadNearbyOffer: (nearbyOffer) => ({
-    type: ActionType.LOAD_NEARBY_OFFER,
-    payload: nearbyOffer,
-  }),
-  loadOfferComments: (offerComments) => ({
-    type: ActionType.LOAD_OFFER_COMMENTS,
-    payload: offerComments,
-  }),
-  postOfferComment: (comment) => ({
-    type: ActionType.POST_OFFER_COMMENT,
-    payload: comment,
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
-  setAuthInfo: (authInfo) => ({
-    type: ActionType.SET_AUTH_INFO,
-    payload: authInfo,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-};
+export const changeCity = (city) => ({
+  type: ActionType.CHANGE_CITY,
+  payload: city,
+});
+
+export const fillListOffers = (city) =>({
+  type: ActionType.FILL_LIST_OFFERS,
+  payload: city,
+});
+
+export const setCurrentOffer = (cardId) => ({
+  type: ActionType.SET_CURRENT_OFFER,
+  payload: cardId,
+});
+
+export const removeCurrentOffer = (cardId) => ({
+  type: ActionType.REMOVE_CURRENT_OFFER,
+  payload: cardId,
+});
+
+export const sortOffers = (payload) => ({
+  type: ActionType.SORT_OFFERS,
+  payload: payload,
+});
+
+export const loadOffers = (offers) => ({
+  type: ActionType.LOAD_OFFERS,
+  payload: offers,
+});
+
+export const loadNearbyOffer = (nearbyOffer) => ({
+  type: ActionType.LOAD_NEARBY_OFFER,
+  payload: nearbyOffer,
+});
+
+export const loadOfferComments = (offerComments) => ({
+  type: ActionType.LOAD_OFFER_COMMENTS,
+  payload: offerComments,
+});
+
+export const postOfferComment = (comment) => ({
+  type: ActionType.POST_OFFER_COMMENT,
+  payload: comment,
+});
+
+export const requireAuthorization = (status) => ({
+  type: ActionType.REQUIRED_AUTHORIZATION,
+  payload: status,
+});
+
+export const setAuthInfo = (authInfo) => ({
+  type: ActionType.SET_AUTH_INFO,
+  payload: authInfo,
+});
+
+export const logout = () => ({
+  type: ActionType.LOGOUT,
+});
+
+export const redirectToRoute = (url) => ({
+  type: ActionType.REDIRECT_TO_ROUTE,
+  payload: url,
+});

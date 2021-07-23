@@ -2,15 +2,25 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+
 import {logout} from '../../store/api-action';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
 import Logo from '../logo/logo';
 
-function Header(props) {
-  const {isActiveLogoLink, logoutApp, authorizationStatus, authInfo} = props;
+import { getAuthorizationStatus, getAuthInfo } from '../../store/selectors/user';
+
+function Header({isActiveLogoLink}) {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const authInfo = useSelector(getAuthInfo);
   authInfo.email = localStorage.getItem('email');
+
+  const dispatch = useDispatch();
+
+  const logoutApp = () => {
+    dispatch(logout());
+  };
 
   return (
     <header className="header">
@@ -69,28 +79,7 @@ function Header(props) {
 
 Header.propTypes = {
   isActiveLogoLink: PropTypes.bool,
-  logoutApp: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  authInfo: PropTypes.shape({
-    avatarUrl: PropTypes.string,
-    email: PropTypes.string,
-    id: PropTypes.number,
-    isPro: PropTypes.bool,
-    name: PropTypes.string,
-    token: PropTypes.string,
-  }),
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  authInfo: state.authInfo,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  logoutApp() {
-    dispatch(logout());
-  },
-});
-
 export {Header};
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

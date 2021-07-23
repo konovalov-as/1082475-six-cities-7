@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import Header from '../header/header';
 import Reviews from '../reviews/reviews';
@@ -9,16 +9,17 @@ import Map from '../map/map';
 import GalleryList from '../gallery-list/gallery-list';
 import InsideItem from '../inside-item/inside-item';
 
-import {cityProp} from '../../const.prop';
-import placeOffersProp from '../offer-list/offer-list.prop';
-import {commentsProp} from '../reviews/reviews.prop';
-
 import {getPlaceOffer, getOfferPhotos} from '../../utils/offer-detail';
 import {RATING_WEIGHT} from '../../const';
 
-function Room(props) {
-  const {city, placeOffers, detailOfferInfo, offerId} = props;
+import {getCity, getPlaceOffers, getDetailOfferInfo} from '../../store/selectors/offer-data';
+
+function Room({offerId}) {
   const isActiveLogoLink = false;
+
+  const city = useSelector(getCity);
+  const placeOffers = useSelector(getPlaceOffers);
+  const detailOfferInfo = useSelector(getDetailOfferInfo);
 
   const className = {
     placesList: 'near-places__list',
@@ -123,20 +124,8 @@ function Room(props) {
 }
 
 Room.propTypes = {
-  city: cityProp,
-  placeOffers: placeOffersProp,
-  detailOfferInfo: PropTypes.exact({
-    comments: commentsProp,
-    nearbyOffers: placeOffersProp,
-  }).isRequired,
   offerId: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  city: state.city,
-  placeOffers: state.placeOffers,
-  detailOfferInfo: state.detailOfferInfo,
-});
-
 export {Room};
-export default connect(mapStateToProps, null)(Room);
+export default Room;

@@ -1,16 +1,16 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import OfferList from '../offer-list/offer-list';
 import Map from '../map/map';
 import SortingOptions from '../sorting-options/sorting-options';
 
-import {cityProp} from '../../const.prop';
-import placeOffersProp from '../offer-list/offer-list.prop';
-import placeOfferProp from '../offer-card/offer-card.prop';
+import { getCity, getPlaceOffers, getSelectedOffer } from '../../store/selectors/offer-data';
 
-function Places(props) {
-  const {city, placeOffers, selectedOffer} = props;
+function Places() {
+  const city = useSelector(getCity);
+  const placeOffers = useSelector(getPlaceOffers);
+  const selectedOffer = useSelector(getSelectedOffer);
 
   const className = {
     placesList: 'cities__places-list',
@@ -34,17 +34,5 @@ function Places(props) {
   );
 }
 
-Places.propTypes = {
-  city: cityProp,
-  placeOffers: placeOffersProp,
-  selectedOffer: placeOfferProp,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-  placeOffers: state.placeOffers,
-  selectedOffer: state.selectedOffer,
-});
-
 export {Places};
-export default connect(mapStateToProps, null)(Places);
+export default Places;

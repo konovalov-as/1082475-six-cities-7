@@ -1,15 +1,14 @@
 import React, {useRef, useEffect} from 'react';
-import {connect} from 'react-redux';
-
 import PropTypes from 'prop-types';
+
+import {useSelector} from 'react-redux';
 
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import useMap from '../../hooks/useMap';
 
-import placeOffersProp from '../offer-list/offer-list.prop';
-import { cityProp } from '../../const.prop';
+import { getCity, getPlaceOffers } from '../../store/selectors/offer-data';
 
 const Marker = {
   DEFAULT: 'img/pin.svg',
@@ -28,8 +27,10 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [15, 30],
 });
 
-function Map(props) {
-  const {city, placeOffers, selectedOffer} = props;
+function Map({selectedOffer}) {
+  const city = useSelector(getCity);
+  const placeOffers = useSelector(getPlaceOffers);
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   const prevActiveOffer = useRef();
@@ -76,17 +77,10 @@ function Map(props) {
 }
 
 Map.propTypes = {
-  city: cityProp,
-  placeOffers: placeOffersProp,
   selectedOffer: PropTypes.shape({
     id: PropTypes.number,
   }),
 };
 
-const mapStateToProps = (state) => ({
-  city: state.city,
-  placeOffers: state.placeOffers,
-});
-
 export {Map};
-export default connect(mapStateToProps, null)(Map);
+export default Map;

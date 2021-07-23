@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import {useSelector, useDispatch} from 'react-redux';
+import { sortOffers } from '../../store/action';
 
-import placeOffersProp from '../offer-list/offer-list.prop';
+import {getPlaceOffers} from '../../store/selectors/offer-data';
 
-function SortingOptions(props) {
-  const {placeOffers, sortOffers} = props;
+function SortingOptions() {
+  const placeOffers = useSelector(getPlaceOffers);
+
+  const dispatch = useDispatch();
+
+  const handleSortOffers = (payload) => {
+    dispatch(sortOffers(payload));
+  };
+
   const [isOpenSorting, setIsOpenSorting] = useState(false);
   const [sortingKind, setSortingKind] = useState('Popular');
 
@@ -18,7 +24,7 @@ function SortingOptions(props) {
   function handleSetSorting(evt) {
     evt.preventDefault();
     setSortingKind(evt.target.textContent);
-    sortOffers({
+    handleSortOffers({
       offers: placeOffers,
       sortingKind: Number(evt.target.id),
     });
@@ -51,21 +57,5 @@ function SortingOptions(props) {
   );
 }
 
-SortingOptions.propTypes = {
-  placeOffers: placeOffersProp,
-  sortOffers: PropTypes.func,
-};
-
-const mapStateToProps = (state) => ({
-  placeOffers: state.placeOffers,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  sortOffers(payload) {
-    dispatch(ActionCreator.sortOffers(payload));
-  },
-});
-
-
 export {SortingOptions};
-export default connect(mapStateToProps, mapDispatchToProps)(SortingOptions);
+export default SortingOptions;

@@ -1,29 +1,18 @@
-import {ActionType} from './action';
-
-import {sortOffersByPriceToHigh, sortOffersByPriceToLow, sortOffersByRatedToFirst} from '../utils/sorting';
-
-import { city, listCities, AuthorizationStatus } from '../const';
+import { ActionType } from '../action';
+import {sortOffersByPriceToHigh, sortOffersByPriceToLow, sortOffersByRatedToFirst} from '../../utils/sorting';
+import { city, listCities } from '../../const';
 
 const initialState = {
-  city,
   originOffers: [],
   placeOffers: [],
   detailOfferInfo: {
     nearbyOffers: [],
     comments: [],
   },
+  city,
   uniquePlaces: [],
   listCities,
   selectedOffer: null,
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
-  authInfo: {
-    avatarUrl: '',
-    email: '',
-    id: 0,
-    isPro: false,
-    name: '',
-    token: '',
-  },
   isDataLoaded: false,
   isDetailOfferInfoLoaded: false,
 };
@@ -45,17 +34,6 @@ function fillListOffers(state, action) {
     ...state,
     city,
     placeOffers: filteredOffers,
-  };
-}
-
-function setCurrentOffer(state, action) {
-  const currentCardId = action.payload;
-
-  const currentOffer = state.placeOffers.find((placeOffer) => placeOffer.id === currentCardId);
-
-  return {
-    ...state,
-    selectedOffer: currentOffer,
   };
 }
 
@@ -89,6 +67,17 @@ function sortOffers(state, action) {
   };
 }
 
+function setCurrentOffer(state, action) {
+  const currentCardId = action.payload;
+
+  const currentOffer = state.placeOffers.find((placeOffer) => placeOffer.id === currentCardId);
+
+  return {
+    ...state,
+    selectedOffer: currentOffer,
+  };
+}
+
 function setUniquePlaces (placeOffers) {
   function mapPlace(placeOffer) {
     return placeOffer.city.name;
@@ -103,12 +92,14 @@ function setUniquePlaces (placeOffers) {
   return mapPlaces.filter(filterPlaces);
 }
 
-const reducer = (state = initialState, action) => {
+const offerData = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_CITY:
       return fillListOffers(state, action);
     case ActionType.FILL_LIST_OFFERS:
       return fillListOffers(state, action);
+    case ActionType.SORT_OFFERS:
+      return sortOffers(state, action);
     case ActionType.SET_CURRENT_OFFER:
       return setCurrentOffer(state, action);
     case ActionType.REMOVE_CURRENT_OFFER:
@@ -116,8 +107,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         selectedOffer: null,
       };
-    case ActionType.SORT_OFFERS:
-      return sortOffers(state, action);
     case ActionType.LOAD_OFFERS:
       setUniquePlaces(action.payload);
       return {
@@ -151,25 +140,9 @@ const reducer = (state = initialState, action) => {
           comments: action.payload,
         },
       };
-    case ActionType.REQUIRED_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
-      };
-    case ActionType.SET_AUTH_INFO:
-      return {
-        ...state,
-        authInfo: action.payload,
-      };
-    case ActionType.LOGOUT:
-      return {
-        ...state,
-        authorizationStatus: AuthorizationStatus.NO_AUTH,
-        authInfo: {},
-      };
     default:
       return state;
   }
 };
 
-export {reducer};
+export {offerData};
