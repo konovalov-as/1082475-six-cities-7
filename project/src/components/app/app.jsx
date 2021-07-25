@@ -1,6 +1,6 @@
 import React from 'react';
 import {PropTypes} from 'prop-types';
-import { connect } from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {isCheckedAuth} from '../../utils/authorization-status';
@@ -14,10 +14,14 @@ import Room from '../room/room';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-import placeOffersProp from '../offer-list/offer-list.prop';
+import { getPlaceOffers, getLoadedDataStatus, getLoadedDetailOfferInfoStatus } from '../../store/selectors/offer-data';
+import { getAuthorizationStatus } from '../../store/selectors/user';
 
-function App(props) {
-  const {authorizationStatus, isDataLoaded, isDetailOfferInfoLoaded, setDetailOfferInfo, placeOffers} = props;
+function App({setDetailOfferInfo}) {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isDataLoaded = useSelector(getLoadedDataStatus);
+  const isDetailOfferInfoLoaded = useSelector(getLoadedDetailOfferInfoStatus);
+  const placeOffers = useSelector(getPlaceOffers);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
@@ -60,19 +64,8 @@ function App(props) {
 }
 
 App.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-  isDetailOfferInfoLoaded: PropTypes.bool.isRequired,
   setDetailOfferInfo: PropTypes.func.isRequired,
-  placeOffers: placeOffersProp,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  isDataLoaded: state.isDataLoaded,
-  isDetailOfferInfoLoaded: state.isDetailOfferInfoLoaded,
-  placeOffers: state.placeOffers,
-});
-
 export {App};
-export default connect(mapStateToProps, null)(App);
+export default App;

@@ -1,12 +1,13 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import FavoritesItem from '../favorites-item/favorites-item';
 
-import placeOffersProp from '../offer-list/offer-list.prop';
+import { getPlaceOffers, getUniquePlaces } from '../../store/selectors/offer-data';
 
-function FavoriteSection(props) {
-  const {placeOffers, uniquePlaces} = props;
+function FavoriteSection() {
+  const placeOffers = useSelector(getPlaceOffers);
+  const uniquePlaces = useSelector(getUniquePlaces);
 
   return (
     <section className="favorites">
@@ -21,15 +22,5 @@ function FavoriteSection(props) {
   );
 }
 
-FavoriteSection.propTypes = {
-  placeOffers: placeOffersProp,
-  uniquePlaces: placeOffersProp,
-};
-
-const mapStateToProps = (state) => ({
-  placeOffers: state.placeOffers,
-  uniquePlaces: state.uniquePlaces,
-});
-
 export {FavoriteSection};
-export default connect(mapStateToProps, null)(FavoriteSection);
+export default FavoriteSection;

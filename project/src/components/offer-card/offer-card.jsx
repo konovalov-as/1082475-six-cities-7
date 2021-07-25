@@ -1,26 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import { setCurrentOffer, removeCurrentOffer } from '../../store/action';
 
 import placeOfferProp from '../offer-card/offer-card.prop';
 import {classNameProp} from '../offer-list/offer-list.prop';
 
 import {RATING_WEIGHT} from '../../const';
 
-function OfferCard(props) {
-  const {offer, className, setCurrentOffer, removeCurrentOffer} = props;
+function OfferCard({offer, className}) {
   const ratingValue = `${offer.rating * RATING_WEIGHT}%`;
+
+  const dispatch = useDispatch();
+
+  const handleSetCurrentOffer = (cardId) => {
+    dispatch(setCurrentOffer(cardId));
+  };
+  const handleRemoveCurrentOffer = (cardId) => {
+    dispatch(removeCurrentOffer(cardId));
+  };
 
   function handleMouseEnter(evt) {
     const currentCardId = Number(evt.currentTarget.id);
-    setCurrentOffer(currentCardId);
+    handleSetCurrentOffer(currentCardId);
   }
 
   function handleMouseLeave(evt) {
     const currentCardId = Number(evt.currentTarget.id);
-    removeCurrentOffer(currentCardId);
+    handleRemoveCurrentOffer(currentCardId);
   }
 
   return (
@@ -69,18 +76,7 @@ function OfferCard(props) {
 OfferCard.propTypes = {
   offer: placeOfferProp,
   className: classNameProp,
-  setCurrentOffer: PropTypes.func.isRequired,
-  removeCurrentOffer: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentOffer(cardId) {
-    dispatch(ActionCreator.setCurrentOffer(cardId));
-  },
-  removeCurrentOffer(cardId) {
-    dispatch(ActionCreator.removeCurrentOffer(cardId));
-  },
-});
-
 export {OfferCard};
-export default connect(null, mapDispatchToProps)(OfferCard);
+export default OfferCard;

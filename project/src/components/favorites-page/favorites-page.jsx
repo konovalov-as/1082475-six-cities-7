@@ -1,17 +1,17 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import Header from  '../header/header';
 import Footer from '../footer/footer';
 import FavoriteSection from '../favorite-section/favorite-section';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 
-import placeOffersProp from '../offer-list/offer-list.prop';
-
 import {checkFavorites} from '../../utils/check-favorites';
 
-function FavoritesPage(props) {
-  const {placeOffers} = props;
+import { getPlaceOffers } from '../../store/selectors/offer-data';
+
+function FavoritesPage() {
+  const placeOffers = useSelector(getPlaceOffers);
   const isFavoriteEmpty = checkFavorites(placeOffers);
 
   return (
@@ -27,13 +27,5 @@ function FavoritesPage(props) {
   );
 }
 
-FavoritesPage.propTypes = {
-  placeOffers: placeOffersProp,
-};
-
-const mapStateToProps = (state) => ({
-  placeOffers: state.placeOffers,
-});
-
 export {FavoritesPage};
-export default connect(mapStateToProps, null)(FavoritesPage);
+export default FavoritesPage;

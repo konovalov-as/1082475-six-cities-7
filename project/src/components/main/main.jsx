@@ -1,22 +1,32 @@
 import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import {useSelector, useDispatch} from 'react-redux';
+import { fillListOffers, changeCity } from '../../store/action';
 
 import Header from '../header/header';
 import ItemCity from '../item-city/item-city';
 import Places from '../places/places';
 import PlacesEmpty from '../places-empty/places-empty';
 
-import placeOffersProp from '../offer-list/offer-list.prop';
-import listCitiesProp, {cityProp} from '../../const.prop';
+import {getCity, getListCities, getPlaceOffers } from '../../store/selectors/offer-data';
 
-function Main(props) {
-  const {city, placeOffers, listCities, fillListOffers, changeCity} = props;
+function Main() {
+  const city = useSelector(getCity);
+  const placeOffers = useSelector(getPlaceOffers);
+  const listCities = useSelector(getListCities);
+
+  const dispatch = useDispatch();
+
+  const handleFillListOffers =  (evt) => {
+    dispatch(fillListOffers(evt));
+  };
+  const handleChangeCity = (evt) => {
+    evt.preventDefault();
+    dispatch(changeCity(evt.target.textContent));
+  };
 
   const [activeCity] = useState(city);
   useEffect(() => {
-    fillListOffers(activeCity.name);
+    handleFillListOffers(activeCity.name);
   }, [activeCity]);
 
   const isActiveLogoLink = true;
@@ -30,7 +40,7 @@ function Main(props) {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {listCities.map((itemCity) => (
-                <ItemCity key={itemCity} itemCity={itemCity} changeCity={changeCity} city={city} />
+                <ItemCity key={itemCity} itemCity={itemCity} changeCity={handleChangeCity} city={city} />
               ))}
             </ul>
           </section>
@@ -43,29 +53,5 @@ function Main(props) {
   );
 }
 
-Main.propTypes = {
-  placeOffers: placeOffersProp,
-  city: cityProp,
-  listCities: listCitiesProp,
-  fillListOffers: PropTypes.func.isRequired,
-  changeCity: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-  placeOffers: state.placeOffers,
-  listCities: state.listCities,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  fillListOffers(evt) {
-    dispatch(ActionCreator.fillListOffers(evt));
-  },
-  changeCity(evt) {
-    evt.preventDefault();
-    dispatch(ActionCreator.changeCity(evt.target.textContent));
-  },
-});
-
 export {Main};
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main;

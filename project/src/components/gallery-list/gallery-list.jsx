@@ -8,7 +8,15 @@ function GalleryList (props) {
 
   return (
     <div className="property__gallery">
-      {offerPhotos.map((offerPhoto, i) => <GalleryItem key={offerPhoto + i.toString()} offerPhoto={offerPhoto} />)}
+      {offerPhotos.map((offerPhoto, i) => {
+        const keyValue = `${i}-${offerPhoto}`;
+        return (
+          <GalleryItem
+            key={keyValue}
+            offerPhoto={offerPhoto}
+          />
+        );
+      })}
     </div>
   );
 }

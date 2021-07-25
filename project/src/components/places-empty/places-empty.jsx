@@ -1,10 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
-import {cityProp} from '../../const.prop';
+import {getCity} from '../../store/selectors/offer-data';
 
-function PlacesEmpty(props) {
-  const {city} = props;
+function PlacesEmpty() {
+  const city = useSelector(getCity);
 
   return (
     <div className="cities__places-container cities__places-container--empty container">
@@ -19,13 +19,5 @@ function PlacesEmpty(props) {
   );
 }
 
-PlacesEmpty.propTypes = {
-  city: cityProp,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-});
-
 export {PlacesEmpty};
-export default connect(mapStateToProps, null)(PlacesEmpty);
+export default PlacesEmpty;
