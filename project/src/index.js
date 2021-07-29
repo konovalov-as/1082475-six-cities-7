@@ -35,7 +35,9 @@ const setDetailOfferInfo = (offerId) => {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App setDetailOfferInfo={setDetailOfferInfo}/>
+      <App
+        setDetailOfferInfo={setDetailOfferInfo}
+      />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

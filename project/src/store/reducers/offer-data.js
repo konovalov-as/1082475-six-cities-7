@@ -15,6 +15,8 @@ const initialState = {
   selectedOffer: null,
   isDataLoaded: false,
   isDetailOfferInfoLoaded: false,
+  favoritesList: [],
+  isFavoritesLoaded: false,
 };
 
 function fillListOffers(state, action) {
@@ -78,18 +80,18 @@ function setCurrentOffer(state, action) {
   };
 }
 
-function setUniquePlaces (placeOffers) {
-  function mapPlace(placeOffer) {
-    return placeOffer.city.name;
-  }
+function toggleFavorite(state, action) {
+  const updatedFavorite = action.payload;
+  const index = state.favoritesList.findIndex((favoriteItem) => favoriteItem.id === updatedFavorite.id);
 
-  const mapPlaces = placeOffers.map(mapPlace);
-
-  function filterPlaces(place, index) {
-    return mapPlaces.indexOf(place) === index;
-  }
-
-  return mapPlaces.filter(filterPlaces);
+  return {
+    ...state,
+    favoritesList: [
+      ...state.favoritesList.slice(0, index),
+      updatedFavorite,
+      ...state.favoritesList.slice(index + 1),
+    ],
+  };
 }
 
 const offerData = (state = initialState, action) => {
@@ -108,7 +110,6 @@ const offerData = (state = initialState, action) => {
         selectedOffer: null,
       };
     case ActionType.LOAD_OFFERS:
-      setUniquePlaces(action.payload);
       return {
         ...state,
         originOffers: action.payload,
@@ -140,6 +141,14 @@ const offerData = (state = initialState, action) => {
           comments: action.payload,
         },
       };
+    case ActionType.LOAD_FAVORITES_LIST:
+      return {
+        ...state,
+        favoritesList: action.payload,
+        isFavoritesLoaded: true,
+      };
+    case ActionType.TOGGLE_FAVORITE:
+      return toggleFavorite(state, action);
     default:
       return state;
   }

@@ -6,6 +6,8 @@ import { setCurrentOffer, removeCurrentOffer } from '../../store/action';
 import placeOfferProp from '../offer-card/offer-card.prop';
 import {classNameProp} from '../offer-list/offer-list.prop';
 
+import { toggleFavorite } from '../../store/api-action';
+
 import {RATING_WEIGHT} from '../../const';
 
 function OfferCard({offer, className}) {
@@ -30,6 +32,14 @@ function OfferCard({offer, className}) {
     handleRemoveCurrentOffer(currentCardId);
   }
 
+  const handleClick = (evt) => {
+    evt.preventDefault();
+    dispatch(toggleFavorite({
+      offerId: offer.id,
+      favoriteStatus: Number(!offer.isFavorite),
+    }));
+  };
+
   return (
     <article
       className={`${className.card} place-card`}
@@ -49,7 +59,11 @@ function OfferCard({offer, className}) {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${offer.isFavorite && 'place-card__bookmark-button--active'} button`}  type="button">
+          <button
+            className={`place-card__bookmark-button ${offer.isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
+            type="button"
+            onClick={handleClick}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

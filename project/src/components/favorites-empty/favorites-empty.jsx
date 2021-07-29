@@ -1,6 +1,6 @@
 import React from 'react';
 
-function FavoritesEmpty(props) {
+function FavoritesEmpty() {
   return (
     <section className="favorites favorites--empty">
       <h1 className="visually-hidden">Favorites (empty)</h1>

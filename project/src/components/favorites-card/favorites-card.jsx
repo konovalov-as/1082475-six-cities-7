@@ -1,12 +1,25 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import placeOfferProp from '../offer-card/offer-card.prop';
+
+import { toggleFavorite } from '../../store/api-action';
 
 import {RATING_WEIGHT} from '../../const';
 
 function FavoritesCard({favoritesOffer}) {
   const ratingValue = `${favoritesOffer.rating * RATING_WEIGHT}%`;
+
+  const dispatch = useDispatch();
+
+  const handleClick = (evt) => {
+    evt.preventDefault();
+    dispatch(toggleFavorite({
+      offerId: favoritesOffer.id,
+      favoriteStatus: Number(!favoritesOffer.isFavorite),
+    }));
+  };
 
   return (
     <article className="favorites__card place-card">
@@ -21,7 +34,11 @@ function FavoritesCard({favoritesOffer}) {
             <b className="place-card__price-value">&euro;{favoritesOffer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button
+            className={`place-card__bookmark-button button ${favoritesOffer.isFavorite ? 'place-card__bookmark-button--active' : ''}`}
+            type="button"
+            onClick={handleClick}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
