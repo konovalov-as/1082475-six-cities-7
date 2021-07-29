@@ -82,15 +82,35 @@ function setCurrentOffer(state, action) {
 
 function toggleFavorite(state, action) {
   const updatedFavorite = action.payload;
-  const index = state.favoritesList.findIndex((favoriteItem) => favoriteItem.id === updatedFavorite.id);
+  const indexFavoriteOffer = state.favoritesList.findIndex((favoriteItem) => favoriteItem.id === updatedFavorite.id);
+  const indexOffer = state.placeOffers.findIndex((offer) => offer.id === updatedFavorite.id);
+  const indexNearbyOffer = state.detailOfferInfo.nearbyOffers.findIndex((nearbyOffer) => nearbyOffer.id === updatedFavorite.id);
 
   return {
     ...state,
-    favoritesList: [
-      ...state.favoritesList.slice(0, index),
+    placeOffers: [
+      ...state.placeOffers.slice(0, indexOffer),
       updatedFavorite,
-      ...state.favoritesList.slice(index + 1),
+      ...state.placeOffers.slice(indexOffer + 1),
     ],
+    originOffers: [
+      ...state.originOffers.slice(0, indexOffer),
+      updatedFavorite,
+      ...state.originOffers.slice(indexOffer + 1),
+    ],
+    favoritesList: [
+      ...state.favoritesList.slice(0, indexFavoriteOffer),
+      updatedFavorite,
+      ...state.favoritesList.slice(indexFavoriteOffer + 1),
+    ],
+    detailOfferInfo: {
+      ...state.detailOfferInfo,
+      nearbyOffers: [
+        ...state.detailOfferInfo.nearbyOffers.slice(0, indexNearbyOffer),
+        updatedFavorite,
+        ...state.detailOfferInfo.nearbyOffers.slice(indexNearbyOffer + 1),
+      ],
+    },
   };
 }
 

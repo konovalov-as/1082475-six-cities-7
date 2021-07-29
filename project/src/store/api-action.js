@@ -94,7 +94,6 @@ export const toggleFavorite = ({offerId, favoriteStatus}) => (dispatch, getState
     api.post(`${APIRoute.FAVORITE}/${offerId}/${favoriteStatus}`)
       .then(({data}) => {
         dispatch(postFavorite(adaptOfferToClient(data)));
-        fetchOffersList();
       })
       .catch((error) => {
         toast(error);
