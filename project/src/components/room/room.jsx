@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Header from '../header/header';
 import Reviews from '../reviews/reviews';
@@ -13,6 +13,7 @@ import {getPlaceOffer, getOfferPhotos} from '../../utils/offer-detail';
 import {RATING_WEIGHT} from '../../const';
 
 import {getCity, getPlaceOffers, getDetailOfferInfo} from '../../store/selectors/offer-data';
+import { toggleFavorite } from '../../store/api-action';
 
 function Room({offerId}) {
   const isActiveLogoLink = false;
@@ -31,6 +32,16 @@ function Room({offerId}) {
   const offerPhotos = getOfferPhotos(placeOffer);
 
   const ratingValue = `${placeOffer.rating * RATING_WEIGHT}%`;
+
+  const dispatch = useDispatch();
+
+  const handleClick = (evt) => {
+    evt.preventDefault();
+    dispatch(toggleFavorite({
+      offerId,
+      favoriteStatus: Number(!placeOffer.isFavorite),
+    }));
+  };
 
   return (
     <div className="page">
@@ -51,7 +62,11 @@ function Room({offerId}) {
                 <h1 className="property__name">
                   {placeOffer.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button
+                  className={`property__bookmark-button button ${placeOffer.isFavorite ? 'property__bookmark-button--active' : ''}` }
+                  type="button"
+                  onClick={handleClick}
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

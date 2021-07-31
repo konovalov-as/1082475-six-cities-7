@@ -32,7 +32,7 @@ function Main() {
   const isActiveLogoLink = true;
 
   return (
-    <div className={`page page--gray page--main ${(placeOffers.length === 0) && 'page__main--index-empty'}`}>
+    <div className={`page page--gray page--main ${(placeOffers.length === 0) ? 'page__main--index-empty' : ''}`}>
       <Header isActiveLogoLink={isActiveLogoLink} />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

@@ -1,6 +1,18 @@
-import { loadOffers, loadNearbyOffer, loadOfferComments, requireAuthorization, setAuthInfo, redirectToRoute, logout as closeSession, postOfferComment } from './action';
+import {
+  loadOffers,
+  loadNearbyOffer,
+  loadOfferComments,
+  requireAuthorization,
+  setAuthInfo,
+  redirectToRoute,
+  logout as closeSession,
+  postOfferComment,
+  loadFavoritesList,
+  postFavorite
+} from './action';
 import {AuthorizationStatus, AppRoute, APIRoute} from '../const';
 import { adaptOfferToClient, adaptOfferCommentsToClient, adaptUserToClient } from '../utils/adapter';
+import { NameSpace } from './reducers/root-reducer';
 
 import { toast } from '../utils/toast/toast';
 
@@ -62,3 +74,29 @@ export const postComment = ({comment, rating}, offerId) => (dispatch, _getState,
       toast('You are not authorized');
     })
 );
+
+export const fetchFavoritesList = () => (dispatch, _getState, api) => {
+  api.get(APIRoute.FAVORITE)
+    .then(({data}) => {
+      dispatch(loadFavoritesList(data.map((favoriteItem) => adaptOfferToClient(favoriteItem))));
+    })
+    .catch((error) => {
+      toast(error);
+    });
+};
+
+export const toggleFavorite = ({offerId, favoriteStatus}) => (dispatch, getState, api) => {
+  const authStatus = getState()[NameSpace.USER].authorizationStatus;
+
+  if (authStatus !== AuthorizationStatus.AUTH) {
+    dispatch(redirectToRoute(AppRoute.SIGNIN));
+  } else {
+    api.post(`${APIRoute.FAVORITE}/${offerId}/${favoriteStatus}`)
+      .then(({data}) => {
+        dispatch(postFavorite(adaptOfferToClient(data)));
+      })
+      .catch((error) => {
+        toast(error);
+      });
+  }
+};

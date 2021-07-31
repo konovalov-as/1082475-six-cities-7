@@ -15,6 +15,8 @@ const initialState = {
   selectedOffer: null,
   isDataLoaded: false,
   isDetailOfferInfoLoaded: false,
+  favoritesList: [],
+  isFavoritesLoaded: false,
 };
 
 function fillListOffers(state, action) {
@@ -78,18 +80,38 @@ function setCurrentOffer(state, action) {
   };
 }
 
-function setUniquePlaces (placeOffers) {
-  function mapPlace(placeOffer) {
-    return placeOffer.city.name;
-  }
+function toggleFavorite(state, action) {
+  const updatedFavorite = action.payload;
+  const indexFavoriteOffer = state.favoritesList.findIndex((favoriteItem) => favoriteItem.id === updatedFavorite.id);
+  const indexOffer = state.placeOffers.findIndex((offer) => offer.id === updatedFavorite.id);
+  const indexNearbyOffer = state.detailOfferInfo.nearbyOffers.findIndex((nearbyOffer) => nearbyOffer.id === updatedFavorite.id);
 
-  const mapPlaces = placeOffers.map(mapPlace);
-
-  function filterPlaces(place, index) {
-    return mapPlaces.indexOf(place) === index;
-  }
-
-  return mapPlaces.filter(filterPlaces);
+  return {
+    ...state,
+    placeOffers: [
+      ...state.placeOffers.slice(0, indexOffer),
+      updatedFavorite,
+      ...state.placeOffers.slice(indexOffer + 1),
+    ],
+    originOffers: [
+      ...state.originOffers.slice(0, indexOffer),
+      updatedFavorite,
+      ...state.originOffers.slice(indexOffer + 1),
+    ],
+    favoritesList: [
+      ...state.favoritesList.slice(0, indexFavoriteOffer),
+      updatedFavorite,
+      ...state.favoritesList.slice(indexFavoriteOffer + 1),
+    ],
+    detailOfferInfo: {
+      ...state.detailOfferInfo,
+      nearbyOffers: [
+        ...state.detailOfferInfo.nearbyOffers.slice(0, indexNearbyOffer),
+        updatedFavorite,
+        ...state.detailOfferInfo.nearbyOffers.slice(indexNearbyOffer + 1),
+      ],
+    },
+  };
 }
 
 const offerData = (state = initialState, action) => {
@@ -108,7 +130,6 @@ const offerData = (state = initialState, action) => {
         selectedOffer: null,
       };
     case ActionType.LOAD_OFFERS:
-      setUniquePlaces(action.payload);
       return {
         ...state,
         originOffers: action.payload,
@@ -140,6 +161,14 @@ const offerData = (state = initialState, action) => {
           comments: action.payload,
         },
       };
+    case ActionType.LOAD_FAVORITES_LIST:
+      return {
+        ...state,
+        favoritesList: action.payload,
+        isFavoritesLoaded: true,
+      };
+    case ActionType.TOGGLE_FAVORITE:
+      return toggleFavorite(state, action);
     default:
       return state;
   }

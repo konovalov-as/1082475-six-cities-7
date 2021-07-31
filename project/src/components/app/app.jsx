@@ -49,7 +49,7 @@ function App({setDetailOfferInfo}) {
         <PrivateRoute
           exact
           path={AppRoute.FAVORITES}
-          render={() => <FavoritesPage />}
+          render={() =>  <FavoritesPage/> }
         >
         </PrivateRoute>
         <Route exact path={AppRoute.SIGNIN}>

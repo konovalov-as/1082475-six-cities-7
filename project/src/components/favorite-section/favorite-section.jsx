@@ -1,26 +1,25 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
 
 import FavoritesItem from '../favorites-item/favorites-item';
 
-import { getPlaceOffers, getUniquePlaces } from '../../store/selectors/offer-data';
+import placeOffersProp from '../offer-list/offer-list.prop';
 
-function FavoriteSection() {
-  const placeOffers = useSelector(getPlaceOffers);
-  const uniquePlaces = useSelector(getUniquePlaces);
+function FavoriteSection({favoritesList}) {
+  const cities = [...new Set(favoritesList.map((favoriteOffer) => favoriteOffer.city.name))];
 
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
-        {uniquePlaces.map((uniquePlace) => {
-          const favoritesOffers = placeOffers.filter((placeOffer) => (placeOffer.city.name === uniquePlace && placeOffer.isFavorite));
-          return favoritesOffers.length ? <FavoritesItem key={uniquePlace} uniquePlace={uniquePlace} favoritesOffers={favoritesOffers}/> : null;
-        })}
+        {cities.map((city) => <FavoritesItem favoriteCity={city} key={city} favoritesList={favoritesList} /> )}
       </ul>
     </section>
   );
 }
+
+FavoriteSection.propTypes = {
+  favoritesList: placeOffersProp,
+};
 
 export {FavoriteSection};
 export default FavoriteSection;

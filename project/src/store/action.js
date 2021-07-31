@@ -8,6 +8,8 @@ export const ActionType = {
   LOAD_NEARBY_OFFER: 'data/nearbyOffer',
   LOAD_OFFER_COMMENTS: 'data/loadOfferComments',
   POST_OFFER_COMMENT: 'data/postOfferComment',
+  LOAD_FAVORITES_LIST: 'data/loadFavoritesList',
+  TOGGLE_FAVORITE: 'data/toggleFavorite',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   SET_AUTH_INFO: 'user/setAuthInfo',
   LOGOUT: 'user/logout',
@@ -57,6 +59,16 @@ export const loadOfferComments = (offerComments) => ({
 export const postOfferComment = (comment) => ({
   type: ActionType.POST_OFFER_COMMENT,
   payload: comment,
+});
+
+export const loadFavoritesList = (favoritesList) => ({
+  type: ActionType.LOAD_FAVORITES_LIST,
+  payload: favoritesList,
+});
+
+export const postFavorite = (favoriteOffer) => ({
+  type: ActionType.TOGGLE_FAVORITE,
+  payload: favoriteOffer,
 });
 
 export const requireAuthorization = (status) => ({
