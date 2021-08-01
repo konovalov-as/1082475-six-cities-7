@@ -45,7 +45,6 @@ function sortOffers(state, action) {
       for (const originOffer of state.originOffers) {
         if (originOffer.city.name === state.city.name) {
           sortingOffer.push(originOffer);
-          break;
         }
       }
       break;
@@ -68,39 +67,7 @@ function sortOffers(state, action) {
   };
 }
 
-function toggleFavorite(state, action) {
-  const updatedFavorite = action.payload;
-  const indexFavoriteOffer = state.favoritesList.findIndex((favoriteItem) => favoriteItem.id === updatedFavorite.id);
-  const indexOffer = state.placeOffers.findIndex((offer) => offer.id === updatedFavorite.id);
-  const indexNearbyOffer = state.detailOfferInfo.nearbyOffers.findIndex((nearbyOffer) => nearbyOffer.id === updatedFavorite.id);
-
-  return {
-    ...state,
-    placeOffers: [
-      ...state.placeOffers.slice(0, indexOffer),
-      updatedFavorite,
-      ...state.placeOffers.slice(indexOffer + 1),
-    ],
-    originOffers: [
-      ...state.originOffers.slice(0, indexOffer),
-      updatedFavorite,
-      ...state.originOffers.slice(indexOffer + 1),
-    ],
-    favoritesList: [
-      ...state.favoritesList.slice(0, indexFavoriteOffer),
-      updatedFavorite,
-      ...state.favoritesList.slice(indexFavoriteOffer + 1),
-    ],
-    detailOfferInfo: {
-      ...state.detailOfferInfo,
-      nearbyOffers: [
-        ...state.detailOfferInfo.nearbyOffers.slice(0, indexNearbyOffer),
-        updatedFavorite,
-        ...state.detailOfferInfo.nearbyOffers.slice(indexNearbyOffer + 1),
-      ],
-    },
-  };
-}
+const replaceOffer = (previousOffers, newOffer) => previousOffers.map((previousOffer) => previousOffer.id === newOffer.id ? newOffer : previousOffer);
 
 const offerData = (state = initialState, action) => {
   switch (action.type) {
@@ -149,7 +116,16 @@ const offerData = (state = initialState, action) => {
         isFavoritesLoaded: true,
       };
     case ActionType.TOGGLE_FAVORITE:
-      return toggleFavorite(state, action);
+      return {
+        ...state,
+        placeOffers: replaceOffer(state.placeOffers, action.payload),
+        detailOfferInfo: {
+          ...state.detailOfferInfo,
+          nearbyOffers: replaceOffer(state.detailOfferInfo.nearbyOffers, action.payload),
+        },
+        favoritesList: replaceOffer(state.favoritesList, action.payload),
+        originOffers: replaceOffer(state.originOffers, action.payload),
+      };
     default:
       return state;
   }
