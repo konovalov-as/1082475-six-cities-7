@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 import {cityProp} from '../../const.prop';
 
@@ -15,9 +16,9 @@ function ItemCity(props) {
       onClick={changeCity}
       className="locations__item"
     >
-      <a className={getStyleLink(city, itemCity)} href="#">
+      <Link to="/" className={getStyleLink(city, itemCity)}>
         <span>{itemCity}</span>
-      </a>
+      </Link>
     </li>
   );
 }

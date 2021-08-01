@@ -6,7 +6,7 @@ function GalleryItem (props) {
 
   return (
     <div className="property__image-wrapper">
-      <img className="property__image" src={offerPhoto} alt="Photo studio" />
+      <img className="property__image" src={offerPhoto} alt="Awesome hotel" />
     </div>
   );
 }

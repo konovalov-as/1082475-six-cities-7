@@ -1,8 +1,8 @@
 import React from 'react';
 import {PropTypes} from 'prop-types';
 import {useSelector} from 'react-redux';
-import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {Switch, Route, Router as BrowserRouter, Redirect} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {isCheckedAuth} from '../../utils/authorization-status';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../../browser-history';
@@ -52,9 +52,15 @@ function App({setDetailOfferInfo}) {
           render={() =>  <FavoritesPage/> }
         >
         </PrivateRoute>
-        <Route exact path={AppRoute.SIGNIN}>
-          <SignIn />
-        </Route>
+        <Route
+          exact
+          path={AppRoute.SIGNIN}
+          render={
+            () => (authorizationStatus === AuthorizationStatus.NO_AUTH)
+              ? <SignIn />
+              : <Redirect to={AppRoute.MAIN} />
+          }
+        />
         <Route>
           <NotFoundScreen />
         </Route>

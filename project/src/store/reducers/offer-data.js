@@ -10,9 +10,7 @@ const initialState = {
     comments: [],
   },
   city,
-  uniquePlaces: [],
   listCities,
-  selectedOffer: null,
   isDataLoaded: false,
   isDetailOfferInfoLoaded: false,
   favoritesList: [],
@@ -23,14 +21,14 @@ function fillListOffers(state, action) {
   const filteredOffers = [];
   const activeCity = action.payload;
 
-  state.originOffers.map((originOffer) => {
+  for (const originOffer of state.originOffers) {
     if (originOffer.city.name === activeCity) {
       filteredOffers.push(originOffer);
       city.name = originOffer.city.name;
       city.location.latitude = originOffer.city.location.latitude;
       city.location.longitude = originOffer.city.location.longitude;
     }
-  });
+  }
 
   return {
     ...state,
@@ -44,11 +42,12 @@ function sortOffers(state, action) {
 
   switch (action.payload.sortingKind) {
     case 0:
-      state.originOffers.map((originOffer) => {
+      for (const originOffer of state.originOffers) {
         if (originOffer.city.name === state.city.name) {
           sortingOffer.push(originOffer);
+          break;
         }
-      });
+      }
       break;
     case 1:
       sortingOffer = sortOffersByPriceToHigh(action.payload.offers);
@@ -66,17 +65,6 @@ function sortOffers(state, action) {
   return {
     ...state,
     placeOffers: sortingOffer,
-  };
-}
-
-function setCurrentOffer(state, action) {
-  const currentCardId = action.payload;
-
-  const currentOffer = state.placeOffers.find((placeOffer) => placeOffer.id === currentCardId);
-
-  return {
-    ...state,
-    selectedOffer: currentOffer,
   };
 }
 
@@ -122,13 +110,6 @@ const offerData = (state = initialState, action) => {
       return fillListOffers(state, action);
     case ActionType.SORT_OFFERS:
       return sortOffers(state, action);
-    case ActionType.SET_CURRENT_OFFER:
-      return setCurrentOffer(state, action);
-    case ActionType.REMOVE_CURRENT_OFFER:
-      return {
-        ...state,
-        selectedOffer: null,
-      };
     case ActionType.LOAD_OFFERS:
       return {
         ...state,
