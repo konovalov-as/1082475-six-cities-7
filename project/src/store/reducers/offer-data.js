@@ -10,9 +10,7 @@ const initialState = {
     comments: [],
   },
   city,
-  uniquePlaces: [],
   listCities,
-  selectedOffer: null,
   isDataLoaded: false,
   isDetailOfferInfoLoaded: false,
   favoritesList: [],
@@ -69,17 +67,6 @@ function sortOffers(state, action) {
   };
 }
 
-function setCurrentOffer(state, action) {
-  const currentCardId = action.payload;
-
-  const currentOffer = state.placeOffers.find((placeOffer) => placeOffer.id === currentCardId);
-
-  return {
-    ...state,
-    selectedOffer: currentOffer,
-  };
-}
-
 function toggleFavorite(state, action) {
   const updatedFavorite = action.payload;
   const indexFavoriteOffer = state.favoritesList.findIndex((favoriteItem) => favoriteItem.id === updatedFavorite.id);
@@ -122,13 +109,6 @@ const offerData = (state = initialState, action) => {
       return fillListOffers(state, action);
     case ActionType.SORT_OFFERS:
       return sortOffers(state, action);
-    case ActionType.SET_CURRENT_OFFER:
-      return setCurrentOffer(state, action);
-    case ActionType.REMOVE_CURRENT_OFFER:
-      return {
-        ...state,
-        selectedOffer: null,
-      };
     case ActionType.LOAD_OFFERS:
       return {
         ...state,

@@ -41,6 +41,12 @@ function ReviewsForm(props) {
       comment: review.review,
       rating: review.rating,
     }, offerId);
+
+    setReview({
+      rating: '',
+      review: '',
+      reviewLength: 0,
+    });
   }
 
   useEffect(() => {

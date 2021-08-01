@@ -38,7 +38,7 @@ function Room({offerId}) {
   const handleClick = (evt) => {
     evt.preventDefault();
     dispatch(toggleFavorite({
-      offerId,
+      offerId: placeOffer.id,
       favoriteStatus: Number(!placeOffer.isFavorite),
     }));
   };
@@ -124,7 +124,7 @@ function Room({offerId}) {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city} placeOffers={detailOfferInfo.nearbyOffers} selectedOffer={placeOffers[offerId - 1]} />
+            <Map city={city} offers={detailOfferInfo.nearbyOffers} activeOffer={placeOffer} />
           </section>
         </section>
         <div className="container">
