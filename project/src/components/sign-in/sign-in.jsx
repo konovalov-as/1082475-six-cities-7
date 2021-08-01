@@ -12,17 +12,13 @@ function SignIn() {
 
   const dispatch = useDispatch();
 
-  const onSubmit = (authData) => {
-    dispatch(login(authData));
-  };
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
   };
 
   return (
