@@ -336,8 +336,6 @@ describe('Reducer: offer data', () => {
       });
   });
 
-  // FILL_LIST_OFFERS
-  // SORT_OFFERS
   it('should update offers by load offers', () => {
     const state = {
       originOffers: [],
@@ -430,22 +428,5 @@ describe('Reducer: offer data', () => {
     expect(offerData(state, loadFavoritesList))
       .toEqual({favoritesList: offers, isFavoritesLoaded: true});
   });
-
-  // it('should toggle offer favorite status', () => {
-  //   const state = {placeOffers: offers, originOffers: offers, favoritesList: offers, detailOfferInfo: {nearbyOffers: offers}};
-
-  //   const favoriteOffer = {
-  //     //
-  //   }
-
-  //   const postFavorite = {
-  //     type: ActionType.TOGGLE_FAVORITE,
-  //     payload: favoriteOffer,
-  //   };
-
-  //   expect(offerData(state, postFavorite))
-  //     .toEqual({favoritesList: offers, isFavoritesLoaded: true});
-  // });
-
 });
 

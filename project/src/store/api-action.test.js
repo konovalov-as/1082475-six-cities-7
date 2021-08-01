@@ -5,11 +5,8 @@ import {
   checkAuth,
   login,
   fetchOffersList,
-  // fetchDetailOfferInfo,
   logout,
   postComment
-  // fetchFavoritesList
-  // toggleFavorite
 } from './api-action';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import { adaptOfferToClient, adaptOfferCommentsToClient, adaptUserToClient } from '../utils/adapter';
@@ -245,26 +242,6 @@ describe('Async operations', () => {
       });
   });
 
-  // it('should make a correct API call to GET /hotels/:id/nearby', () => {
-  //   const apiMock = new MockAdapter(api);
-  //   const dispatch = jest.fn();
-  //   const offerId = 1;
-  //   const nearbyOffersLoader = fetchDetailOfferInfo(offerId);
-
-  //   apiMock
-  //     .onGet(`${APIRoute.OFFERS}/${offerId}/nearby`)
-  //     .reply(200, mockOffers);
-
-  //   return nearbyOffersLoader(dispatch, () => {}, api)
-  //     .then(() => {
-  //       expect(dispatch).toHaveBeenCalledTimes(1);
-  //       expect(dispatch).toHaveBeenNthCalledWith(1, {
-  //         type: ActionType.LOAD_NEARBY_OFFER,
-  //         payload: mockOffers.map((mockOffer) => adaptOfferToClient(mockOffer)),
-  //       });
-  //     });
-  // });
-
   it('should make a correct API call to DELETE /logout', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
@@ -307,26 +284,4 @@ describe('Async operations', () => {
         });
       });
   });
-
-  // it('should make a correct API call to GET /favorite', () => {
-  //   const apiMock = new MockAdapter(api);
-  //   const dispatch = jest.fn();
-  //   const favoritesOffersLoader = fetchFavoritesList();
-
-  //   apiMock
-  //     .onGet(APIRoute.FAVORITE)
-  //     .reply(200, mockOffers);
-
-  //   return favoritesOffersLoader(dispatch, () => {}, api)
-  //     .then(() => {
-  //       expect(dispatch).toHaveBeenCalledTimes(1);
-  //       expect(dispatch).toHaveBeenNthCalledWith(1, {
-  //         type: ActionType.LOAD_FAVORITES_LIST,
-  //         payload: mockOffers.map((mockOffer) => adaptOfferToClient(mockOffer))
-  //       });
-  //     });
-  // });
-
-  // toggleFavorite
-
 });
