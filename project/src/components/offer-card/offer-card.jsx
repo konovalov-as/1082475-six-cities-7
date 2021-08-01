@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import { setCurrentOffer, removeCurrentOffer } from '../../store/action';
 
 import placeOfferProp from '../offer-card/offer-card.prop';
 import {classNameProp} from '../offer-list/offer-list.prop';
@@ -10,27 +10,10 @@ import { toggleFavorite } from '../../store/api-action';
 
 import {RATING_WEIGHT} from '../../const';
 
-function OfferCard({offer, className}) {
+function OfferCard({offer, className, handleMouseEnter, handleMouseLeave}) {
   const ratingValue = `${offer.rating * RATING_WEIGHT}%`;
 
   const dispatch = useDispatch();
-
-  const handleSetCurrentOffer = (cardId) => {
-    dispatch(setCurrentOffer(cardId));
-  };
-  const handleRemoveCurrentOffer = (cardId) => {
-    dispatch(removeCurrentOffer(cardId));
-  };
-
-  function handleMouseEnter(evt) {
-    const currentCardId = Number(evt.currentTarget.id);
-    handleSetCurrentOffer(currentCardId);
-  }
-
-  function handleMouseLeave(evt) {
-    const currentCardId = Number(evt.currentTarget.id);
-    handleRemoveCurrentOffer(currentCardId);
-  }
 
   const handleClick = (evt) => {
     evt.preventDefault();
@@ -90,6 +73,8 @@ function OfferCard({offer, className}) {
 OfferCard.propTypes = {
   offer: placeOfferProp,
   className: classNameProp,
+  handleMouseEnter: PropTypes.func.isRequired,
+  handleMouseLeave: PropTypes.func.isRequired,
 };
 
 export {OfferCard};

@@ -25,7 +25,7 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
 export const fetchDetailOfferInfo = (offerId) => (dispatch, _getState, api) => {
   api.get(`${APIRoute.OFFERS}/${offerId}${APIRoute.NEARBY}`)
     .then(({data}) => (dispatch(loadNearbyOffer(data.map((nearbyOffer) => adaptOfferToClient(nearbyOffer))))))
-    .catch(() => {});
+    .catch(() => {'No access to the server';});
   api.get(`${APIRoute.COMMENTS}/${offerId}`)
     .then(({data}) => dispatch(loadOfferComments(data.map((offerComments) => adaptOfferCommentsToClient(offerComments)))))
     .catch(() => {'No access to the server';});

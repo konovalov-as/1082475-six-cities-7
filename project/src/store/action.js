@@ -1,8 +1,6 @@
 export const ActionType = {
   CHANGE_CITY: 'offer/changeCity',
   FILL_LIST_OFFERS: 'offer/fillListOffers',
-  SET_CURRENT_OFFER: 'offer/setCurrentOffer',
-  REMOVE_CURRENT_OFFER: 'offer/removeCurrentOffer',
   SORT_OFFERS: 'offer/sortOffers',
   LOAD_OFFERS: 'data/offers',
   LOAD_NEARBY_OFFER: 'data/nearbyOffer',
@@ -24,16 +22,6 @@ export const changeCity = (city) => ({
 export const fillListOffers = (city) =>({
   type: ActionType.FILL_LIST_OFFERS,
   payload: city,
-});
-
-export const setCurrentOffer = (cardId) => ({
-  type: ActionType.SET_CURRENT_OFFER,
-  payload: cardId,
-});
-
-export const removeCurrentOffer = (cardId) => ({
-  type: ActionType.REMOVE_CURRENT_OFFER,
-  payload: cardId,
 });
 
 export const sortOffers = (payload) => ({

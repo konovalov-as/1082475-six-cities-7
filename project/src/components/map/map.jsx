@@ -1,14 +1,13 @@
 import React, {useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
-import {useSelector} from 'react-redux';
-
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import useMap from '../../hooks/useMap';
 
-import { getCity, getPlaceOffers } from '../../store/selectors/offer-data';
+import placeOffersProp from '../offer-list/offer-list.prop';
+import { cityProp } from '../../const.prop';
 
 const Marker = {
   DEFAULT: 'img/pin.svg',
@@ -27,19 +26,16 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [15, 30],
 });
 
-function Map({selectedOffer}) {
-  const city = useSelector(getCity);
-  const placeOffers = useSelector(getPlaceOffers);
-
+function Map({city, activeOffer, offers}) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   const prevActiveOffer = useRef();
 
   useEffect(() => {
     if (map) {
-      prevActiveOffer.current = selectedOffer;
+      prevActiveOffer.current = activeOffer;
 
-      if (prevActiveOffer !== selectedOffer) {
+      if (prevActiveOffer !== activeOffer) {
         [...map.getPane('markerPane').children]
           .forEach((marker) => marker.remove());
       }
@@ -48,7 +44,7 @@ function Map({selectedOffer}) {
 
       const latLngs =[];
 
-      placeOffers.forEach((offer) => {
+      offers.forEach((offer) => {
         const { latitude, longitude } = offer.location;
 
         const marker = leaflet
@@ -57,7 +53,7 @@ function Map({selectedOffer}) {
             lng: longitude,
           },
           {
-            icon: (selectedOffer !== null && selectedOffer !== undefined && offer.id === selectedOffer.id)
+            icon: (activeOffer !== null && activeOffer !== undefined && offer.id === activeOffer.id)
               ? currentCustomIcon
               : defaultCustomIcon,
           })
@@ -69,7 +65,7 @@ function Map({selectedOffer}) {
       const bounds = leaflet.latLngBounds(latLngs);
       map.fitBounds(bounds);
     }
-  }, [map, placeOffers, selectedOffer]);
+  }, [map, offers, activeOffer]);
 
   return (
     <section id="map" ref={mapRef} style={{height: '100%'}} className="cities__map map" />
@@ -77,9 +73,11 @@ function Map({selectedOffer}) {
 }
 
 Map.propTypes = {
-  selectedOffer: PropTypes.shape({
+  activeOffer: PropTypes.shape({
     id: PropTypes.number,
   }),
+  city: cityProp,
+  offers: placeOffersProp,
 };
 
 export {Map};
