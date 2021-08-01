@@ -65,7 +65,7 @@ function Map({city, activeOffer, offers}) {
       const bounds = leaflet.latLngBounds(latLngs);
       map.fitBounds(bounds);
     }
-  }, [map, offers, activeOffer]);
+  }, [map, offers, activeOffer, city]);
 
   return (
     <section id="map" ref={mapRef} style={{height: '100%'}} className="cities__map map" />

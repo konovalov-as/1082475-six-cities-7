@@ -1,60 +1,43 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {postComment} from '../../store/api-action';
 
-const REVIEW_NAME = 'review';
 const ReviewLength = {
-  current: 0,
   MIN: 50,
   MAX: 300,
 };
 
-function ReviewsForm(props) {
-  const {onSubmit, offerId} = props;
-  const submitButton = useRef();
+function ReviewsForm({offerId}) {
+  const dispatch = useDispatch();
 
-  const [review, setReview] = useState({
-    rating: '',
-    review: '',
-    reviewLength: ReviewLength.current,
-  });
+  const [, setReadonly] = useState(false);
+  const [comment, setComment] = useState('');
+  const [rating, setRating] = useState(null);
 
-  const {reviewLength, rating} = review;
+  const resetForm = () => {
+    setComment('');
+    setRating(null);
+  };
 
-  function handleRatingChange(evt) {
-    const {name, value} = evt.target;
-    if (name === REVIEW_NAME) {
-      ReviewLength.current = value.length;
-    }
-    setReview({
-      ...review,
-      [name]: value,
-      reviewLength: ReviewLength.current,
-    });
-  }
+  const handleSuccess = () => {
+    resetForm();
+  };
+
+  const handleFail = () => {
+    setReadonly(false);
+  };
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    onSubmit({
-      comment: review.review,
-      rating: review.rating,
-    }, offerId);
-
-    setReview({
-      rating: '',
-      review: '',
-      reviewLength: 0,
-    });
+    dispatch(postComment({comment: comment, rating: rating}, offerId))
+      .then(() => handleSuccess())
+      .catch(() => handleFail());
   }
 
-  useEffect(() => {
-    submitButton.current.disabled = false;
-    if (reviewLength < ReviewLength.MIN || reviewLength > ReviewLength.MAX || rating === '') {
-      submitButton.current.disabled = true;
-    }
-  }, [reviewLength, rating]);
+  const isDisabledButton = rating === null || comment.length < ReviewLength.MIN
+    || comment.length > ReviewLength.MAX;
 
   return (
     <form className="reviews__form form"
@@ -70,7 +53,8 @@ function ReviewsForm(props) {
           value="5"
           id="5-stars"
           type="radio"
-          onChange={handleRatingChange}
+          onChange={(evt) => setRating(Number(evt.target.value))}
+          checked={rating === 5}
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -84,7 +68,8 @@ function ReviewsForm(props) {
           value="4"
           id="4-stars"
           type="radio"
-          onChange={handleRatingChange}
+          onChange={(evt) => setRating(Number(evt.target.value))}
+          checked={rating === 4}
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
@@ -98,7 +83,8 @@ function ReviewsForm(props) {
           value="3"
           id="3-stars"
           type="radio"
-          onChange={handleRatingChange}
+          onChange={(evt) => setRating(Number(evt.target.value))}
+          checked={rating === 3}
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
@@ -112,7 +98,8 @@ function ReviewsForm(props) {
           value="2"
           id="2-stars"
           type="radio"
-          onChange={handleRatingChange}
+          onChange={(evt) => setRating(Number(evt.target.value))}
+          checked={rating === 2}
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">
@@ -126,7 +113,8 @@ function ReviewsForm(props) {
           value="1"
           id="1-star"
           type="radio"
-          onChange={handleRatingChange}
+          onChange={(evt) => setRating(Number(evt.target.value))}
+          checked={rating === 1}
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">
@@ -139,30 +127,23 @@ function ReviewsForm(props) {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleRatingChange}
-        value={review.review}
+        onChange={(evt) => setComment(evt.target.value)}
+        value={comment}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{reviewLength} characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{comment.length} characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="" ref={submitButton}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isDisabledButton ? 'disabled' : ''}>Submit</button>
       </div>
     </form>
   );
 }
 
 ReviewsForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   offerId: PropTypes.number.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(commentPost, offerId) {
-    dispatch(postComment(commentPost, offerId));
-  },
-});
-
 export {ReviewsForm};
-export default connect(null, mapDispatchToProps)(ReviewsForm);
+export default ReviewsForm;

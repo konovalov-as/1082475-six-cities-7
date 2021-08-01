@@ -25,7 +25,7 @@ function FavoritesCard({favoritesOffer}) {
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${favoritesOffer.id}`}>
-          <img className="place-card__image" src={favoritesOffer.previewImage} width="150" height="110" alt="Place image" />
+          <img className="place-card__image" src={favoritesOffer.previewImage} width="150" height="110" alt="Beautiful place" />
         </Link>
       </div>
       <div className="favorites__card-info place-card__info">

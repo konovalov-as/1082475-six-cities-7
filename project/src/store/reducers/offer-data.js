@@ -21,14 +21,14 @@ function fillListOffers(state, action) {
   const filteredOffers = [];
   const activeCity = action.payload;
 
-  state.originOffers.map((originOffer) => {
+  for (const originOffer of state.originOffers) {
     if (originOffer.city.name === activeCity) {
       filteredOffers.push(originOffer);
       city.name = originOffer.city.name;
       city.location.latitude = originOffer.city.location.latitude;
       city.location.longitude = originOffer.city.location.longitude;
     }
-  });
+  }
 
   return {
     ...state,
@@ -42,11 +42,12 @@ function sortOffers(state, action) {
 
   switch (action.payload.sortingKind) {
     case 0:
-      state.originOffers.map((originOffer) => {
+      for (const originOffer of state.originOffers) {
         if (originOffer.city.name === state.city.name) {
           sortingOffer.push(originOffer);
+          break;
         }
-      });
+      }
       break;
     case 1:
       sortingOffer = sortOffersByPriceToHigh(action.payload.offers);

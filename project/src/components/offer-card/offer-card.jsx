@@ -33,7 +33,7 @@ function OfferCard({offer, className, handleMouseEnter, handleMouseLeave}) {
       {offer.isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className={`${className.imageWrap} place-card__image-wrapper`}>
         <Link to={`/offer/${offer.id}`}>
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Amazing place" />
         </Link>
       </div>
       <div className="place-card__info">

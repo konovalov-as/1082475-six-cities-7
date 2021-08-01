@@ -50,8 +50,3 @@ export const listCities = [
   'Hamburg',
   'Dusseldorf',
 ];
-
-export const FavoriteStatus = {
-  ADD: 1,
-  DEL: 0,
-};

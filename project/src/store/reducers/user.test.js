@@ -78,7 +78,7 @@ describe('Reducer: user', () => {
       });
   });
 
-  it('should exit the application ', () => {
+  it('should exit the application', () => {
     const state = {
       authorizationStatus: 'AUTH',
       authInfo: {

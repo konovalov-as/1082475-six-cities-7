@@ -2,11 +2,12 @@ import { OfferPhotoCount } from '../const';
 
 export function getPlaceOffer (offerId, placeOffers) {
   let placeOffer = {};
-  placeOffers.map((offer) => {
+  for (const offer of placeOffers) {
     if (offer.id === offerId) {
       placeOffer = offer;
+      break;
     }
-  });
+  }
   return placeOffer;
 }
 

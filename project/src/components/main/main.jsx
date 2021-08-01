@@ -16,9 +16,6 @@ function Main() {
 
   const dispatch = useDispatch();
 
-  const handleFillListOffers =  (evt) => {
-    dispatch(fillListOffers(evt));
-  };
   const handleChangeCity = (evt) => {
     evt.preventDefault();
     dispatch(changeCity(evt.target.textContent));
@@ -26,8 +23,8 @@ function Main() {
 
   const [activeCity] = useState(city);
   useEffect(() => {
-    handleFillListOffers(activeCity.name);
-  }, [activeCity]);
+    dispatch(fillListOffers(activeCity.name));
+  }, [activeCity, dispatch]);
 
   const isActiveLogoLink = true;
 
