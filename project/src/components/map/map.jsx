@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 
 import placeOffersProp from '../offer-list/offer-list.prop';
 import { cityProp } from '../../const.prop';

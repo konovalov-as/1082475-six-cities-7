@@ -291,7 +291,6 @@ describe('Reducer: offer data', () => {
         isDataLoaded: false,
         isDetailOfferInfoLoaded: false,
         favoritesList: [],
-        isFavoritesLoaded: false,
       });
   });
 
@@ -419,14 +418,14 @@ describe('Reducer: offer data', () => {
   });
 
   it('should update favorite offers by load favorite offers', () => {
-    const state = {favoritesList: [], isFavoritesLoaded: false};
+    const state = {favoritesList: []};
     const loadFavoritesList = {
       type: ActionType.LOAD_FAVORITES_LIST,
       payload: offers,
     };
 
     expect(offerData(state, loadFavoritesList))
-      .toEqual({favoritesList: offers, isFavoritesLoaded: true});
+      .toEqual({favoritesList: offers});
   });
 });
 

@@ -1,6 +1,6 @@
 import { ActionType } from '../action';
 import {sortOffersByPriceToHigh, sortOffersByPriceToLow, sortOffersByRatedToFirst} from '../../utils/sorting';
-import { city, listCities } from '../../const';
+import { city, listCities, SortingKind } from '../../const';
 
 const initialState = {
   originOffers: [],
@@ -14,7 +14,6 @@ const initialState = {
   isDataLoaded: false,
   isDetailOfferInfoLoaded: false,
   favoritesList: [],
-  isFavoritesLoaded: false,
 };
 
 function fillListOffers(state, action) {
@@ -41,20 +40,20 @@ function sortOffers(state, action) {
   let sortingOffer = [];
 
   switch (action.payload.sortingKind) {
-    case 0:
+    case SortingKind.POPULAR:
       for (const originOffer of state.originOffers) {
         if (originOffer.city.name === state.city.name) {
           sortingOffer.push(originOffer);
         }
       }
       break;
-    case 1:
+    case SortingKind.LOW_TO_HIGH:
       sortingOffer = sortOffersByPriceToHigh(action.payload.offers);
       break;
-    case 2:
+    case SortingKind.HIGH_TO_LOW:
       sortingOffer = sortOffersByPriceToLow(action.payload.offers);
       break;
-    case 3:
+    case SortingKind.TOP_RATED_FIRST:
       sortingOffer = sortOffersByRatedToFirst(action.payload.offers);
       break;
     default:
@@ -113,7 +112,6 @@ const offerData = (state = initialState, action) => {
       return {
         ...state,
         favoritesList: action.payload,
-        isFavoritesLoaded: true,
       };
     case ActionType.TOGGLE_FAVORITE:
       return {

@@ -3,7 +3,7 @@ import {PropTypes} from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Switch, Route, Router as BrowserRouter, Redirect} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {isCheckedAuth} from '../../utils/authorization-status';
+import {isUnauthorized} from '../../utils/authorization-status';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../../browser-history';
 
@@ -23,7 +23,7 @@ function App({setDetailOfferInfo}) {
   const isDetailOfferInfoLoaded = useSelector(getLoadedDetailOfferInfoStatus);
   const placeOffers = useSelector(getPlaceOffers);
 
-  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+  if (isUnauthorized(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
     );

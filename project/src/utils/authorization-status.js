@@ -1,4 +1,3 @@
 import {AuthorizationStatus} from '../const';
 
-export const isCheckedAuth = (authorizationStatus) =>
-  authorizationStatus === AuthorizationStatus.UNKNOWN;
+export const isUnauthorized = (authorizationStatus) => authorizationStatus === AuthorizationStatus.UNKNOWN;

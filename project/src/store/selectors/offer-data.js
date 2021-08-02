@@ -8,4 +8,3 @@ export const getLoadedDetailOfferInfoStatus = (state) => state[NameSpace.DATA].i
 export const getCity = (state) => state[NameSpace.DATA].city;
 export const getListCities = (state) => state[NameSpace.DATA].listCities;
 export const getFavoritesList = (state) => state[NameSpace.DATA].favoritesList;
-export const getLoadedFavoritesStatus = (state) => state[NameSpace.DATA].isFavoritesLoaded;

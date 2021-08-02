@@ -4,17 +4,15 @@ import { sortOffers } from '../../store/action';
 
 import {getPlaceOffers} from '../../store/selectors/offer-data';
 
+import { SortingKind } from '../../const';
+
 function SortingOptions() {
   const placeOffers = useSelector(getPlaceOffers);
 
   const dispatch = useDispatch();
 
-  const handleSortOffers = (payload) => {
-    dispatch(sortOffers(payload));
-  };
-
   const [isOpenSorting, setIsOpenSorting] = useState(false);
-  const [sortingKind, setSortingKind] = useState('Popular');
+  const [sortingKind, setSortingKind] = useState(SortingKind.POPULAR);
 
   function handleOpenSorting(evt) {
     evt.preventDefault();
@@ -24,10 +22,11 @@ function SortingOptions() {
   function handleSetSorting(evt) {
     evt.preventDefault();
     setSortingKind(evt.target.textContent);
-    handleSortOffers({
+
+    dispatch(sortOffers({
       offers: placeOffers,
-      sortingKind: Number(evt.target.id),
-    });
+      sortingKind: evt.target.textContent,
+    }));
     setIsOpenSorting(!isOpenSorting);
   }
 
@@ -48,10 +47,10 @@ function SortingOptions() {
         className={`places__options places__options--custom ${(isOpenSorting) && 'places__options--opened'}`}
         onClick={handleSetSorting}
       >
-        <li id="0" className="places__option places__option--active" tabIndex="0">Popular</li>
-        <li id="1" className="places__option" tabIndex="0">Price: low to high</li>
-        <li id="2" className="places__option" tabIndex="0">Price: high to low</li>
-        <li id="3" className="places__option" tabIndex="0">Top rated first</li>
+        <li className="places__option places__option--active" tabIndex="0">{SortingKind.POPULAR}</li>
+        <li className="places__option" tabIndex="0">{SortingKind.LOW_TO_HIGH}</li>
+        <li className="places__option" tabIndex="0">{SortingKind.HIGH_TO_LOW}</li>
+        <li className="places__option" tabIndex="0">{SortingKind.TOP_RATED_FIRST}</li>
       </ul>
     </form>
   );
